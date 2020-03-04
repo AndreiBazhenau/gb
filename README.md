@@ -1,1 +1,1 @@
-# gb
+# GeekBrains projects
