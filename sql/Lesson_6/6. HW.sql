@@ -50,3 +50,4 @@ SELECT id,
 FROM users
 ORDER BY num_activity
 LIMIT 10;
+
