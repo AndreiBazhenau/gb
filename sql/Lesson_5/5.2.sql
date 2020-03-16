@@ -138,3 +138,4 @@ INSERT INTO `storehouses_products` (`id`, `storehouse_id`, `product_id`, `value`
 
 -- сортировка по возростанию с отсеиванием нулевых значений в конец
 select * from storehouses_products order by if(value = 0, 1, 0), value;
+
