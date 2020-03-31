@@ -1,8 +1,8 @@
--- Р”Р°РЅРЅР°СЏ Р±Р°Р·Р° РґР°РЅРЅС‹С… РїСЂРµРґРЅР°РЅР°С‡РµРЅР° РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С„РёР»СЊРјР°С… (РєР°Рє РґРѕРєСѓРјРµРЅС‚Р°Р»СЊРЅС‹С…,
--- С‚Р°Рє Рё С…СѓРґРѕР¶РµСЃС‚РІРµРЅРЅС‹С…), Р°РєС‚С‘СЂР°С…, СЂРµР¶РёСЃС‘СЂР°С…, СЃС†РµРЅР°СЂРёСЃС‚Р°С… Рё РІСЃРµС… РѕСЃС‚Р°Р»СЊРЅС‹С… Р»СЋРґРµР№,
--- Р·Р°РґРµР№СЃС‚РІРѕРІР°РЅРЅС‹С… РІ СЃСЉС‘РјРєР°С…. РўР°РєР¶Рµ РІ Р‘Р” С…СЂР°РЅРёС‚СЊСЃСЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏС… СЃРёСЃС‚РµРјС‹,
--- СЂРµР°Р»РёР·РѕРІР°РЅР° СЃРёСЃС‚РµРјР° С…СЂР°РЅРµРЅРёСЏ РѕС‚Р·С‹РІРѕРІ Рё РѕС†РµРЅРѕРє С„РёР»СЊРјРѕРІ. Р Р°СЃСЃС‡РёС‚С‹РІР°СЋС‚СЃСЏ СЂРµР№С‚РёРЅРіРё С„РёР»СЊРјРѕРІ.
--- Р‘Р” РѕСЂРіР°РЅРёР·РѕРІР°РЅР° РїРѕ РїСЂРёРЅС†РёРїСѓ РїРѕРґРѕР±РёСЏ СЃР°Р№С‚Р° kinopoisk.ru
+-- Данная база данных преднаначена для хранения информации о фильмах (как документальных,
+-- так и художественных), актёрах, режисёрах, сценаристах и все[ остальных людей,
+-- задействованных в съёмках. Также в БД храниться информация о пользователях системы,
+-- реализована система хранения отзывов и оценок фильмов. Рассчитываются рейтинги фильмов.
+-- БД организована по принципу подобия сайта kinopoisk.ru
 
 
 SHOW DATABASES;
@@ -19,32 +19,78 @@ CREATE TABLE movie (
  name VARCHAR(255) NOT NULL,
  moto VARCHAR(255),
  year YEAR(4),
- duration TIME,
+ duration SMALLINT UNSIGNED,
  budget INT UNSIGNED,
  grosses_usa INT UNSIGNED,
  grossses_all INT UNSIGNED,
  first_performance DATE,
  firts_prformace_russia DATE,
- tv_show SET('0', '1')
+ tv_show SET('0', '1') NOT NULL
 );
 DESC movie;
 SELECT * FROM movie;
 
 
--- 2. style or ganre of movie
-DROP TABLE IF EXISTS style;
-CREATE TABLE style (
- movie_id INT UNSIGNED NOT NULL,
- style_id INT UNSIGNED NOT NULL
+
+-- 2. genre list
+DROP TABLE IF EXISTS genre_list;
+CREATE TABLE genre_list (
+ genre_id INT UNSIGNED NOT NULL,
+ genre VARCHAR(255) NOT NULL
 );
-DESC style;
-SELECT * FROM style;
+DESC genre_list;
+SELECT * FROM genre_list;
+
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('1', 'Comedy');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('2', 'Horror');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('3', 'Sci-Fi');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('4', 'Western');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('5', 'Melodrama');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('6', 'Musical');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('7', 'Action');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('8', 'Adventure');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('9', 'Fantasy');
+INSERT INTO `genre_list` (`genre_id`, `genre`) VALUES ('10', 'Thriller');
 
 
--- 3. actors, directors and others who made a movie
-DROP TABLE IF EXISTS cast;
-CREATE TABLE cast (
- id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+-- 3. genre of the movie
+DROP TABLE IF EXISTS genre;
+CREATE TABLE genre (
+ movie_id INT UNSIGNED NOT NULL,
+ genre_id INT UNSIGNED NOT NULL
+);
+DESC genre;
+SELECT * FROM genre;
+
+
+SELECT name, year, genre
+FROM movie JOIN genre ON movie.id = genre.movie_id
+           JOIN genre_list ON genre.genre_id = genre_list.genre_id
+WHERE name = 'Molestias cupiditate ipsum voluptas in.';
+
+
+-- 4. role types
+DROP TABLE IF EXISTS roles;
+CREATE TABLE roles (
+ role_id INT UNSIGNED NOT NULL,
+ role VARCHAR(255) NOT NULL
+);
+DESC roles;
+SELECT * FROM roles;
+
+INSERT INTO `roles` (`role_id`, `role`) VALUES ('1', 'star');
+INSERT INTO `roles` (`role_id`, `role`) VALUES ('2', 'actor');
+INSERT INTO `roles` (`role_id`, `role`) VALUES ('3', 'director');
+INSERT INTO `roles` (`role_id`, `role`) VALUES ('4', 'art director');
+INSERT INTO `roles` (`role_id`, `role`) VALUES ('5', 'composer');
+INSERT INTO `roles` (`role_id`, `role`) VALUES ('6', 'editor');
+INSERT INTO `roles` (`role_id`, `role`) VALUES ('7', 'cameraman');
+
+
+-- 5. staff
+DROP TABLE IF EXISTS staff;
+CREATE TABLE staff (
+ staff_id INT UNSIGNED NOT NULL,
  name VARCHAR(255) NOT NULL,
  f_name VARCHAR(255) NOT NULL,
  birthdate DATE,
@@ -52,27 +98,23 @@ CREATE TABLE cast (
  death_date DATE,
  sex CHAR(1)
 );
-DESC cast;
-SELECT * FROM cast;
-
-
--- 4. connection between movie and staff
-DROP TABLE IF EXISTS staff;
-CREATE TABLE staff (
- movie_id INT UNSIGNED NOT NULL,
- star_id INT UNSIGNED,
- actor_id INT UNSIGNED,
- director_id INT UNSIGNED,
- composer_id INT UNSIGNED,
- art_director_id INT UNSIGNED,
- editor_id INT UNSIGNED,
- cameraman_id INT UNSIGNED
-);
 DESC staff;
 SELECT * FROM staff;
 
 
--- 5. users
+-- 6. links between staff, movies and roles
+DROP TABLE IF EXISTS movie_staff;
+CREATE TABLE movie_staff (
+ staff_id INT UNSIGNED NOT NULL,
+ movie_id INT UNSIGNED NOT NULL,
+ role_id INT UNSIGNED NOT NULL
+);
+DESC movie_staff;
+SELECT * FROM movie_staff;
+
+
+
+-- 7. users
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
  user_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -85,7 +127,7 @@ DESC users;
 SELECT * FROM users;
 
 
--- 6. reviews and marks
+-- 8. reviews and marks
 DROP TABLE IF EXISTS review;
 CREATE TABLE review (
  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -98,7 +140,7 @@ DESC review;
 SELECT * FROM review;
 
 
--- 7. movie rating  РџР•Р Р•РЎР§РРўР«Р’РђР•РўРЎРЇ РїРѕ С‚СЂРёРіРіРµСЂСѓ СЂР°Р· РІ РґРµРЅСЊ
+-- 9. movie rating  ПЕРЕСЧИТЫВАЕТСЯ по триггеру раз в день
 DROP TABLE IF EXISTS rating;
 CREATE TABLE rating (
  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -108,7 +150,7 @@ CREATE TABLE rating (
 DESC rating;
 SELECT * FROM rating;
 
--- 8. TV show & episods
+-- 10. TV show & episods
 DROP TABLE IF EXISTS tv_show;
 CREATE TABLE tv_show (
  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -119,16 +161,7 @@ DESC tv_show;
 SELECT * FROM tv_show;
 
 
--- 9. Sumilar movies. Table for recommendations
-DROP TABLE IF EXISTS movie_like;
-CREATE TABLE movie_like (
- movie_id_1 INT UNSIGNED NOT NULL PRIMARY KEY,
- movie_id_2 INT UNSIGNED NOT NULL
-);
-DESC movie_like;
-SELECT * FROM movie_like;
-
--- 10. Media content & links
+-- 11. Media content & links
 DROP TABLE IF EXISTS media;
 CREATE TABLE media (
  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -137,7 +170,7 @@ CREATE TABLE media (
  picture_link VARCHAR(255)
 );
 
--- 11. Awards list
+-- 12. Awards list
 DROP TABLE IF EXISTS award_list;
 CREATE TABLE award_list (
  award_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -146,8 +179,14 @@ CREATE TABLE award_list (
 DESC award_list;
 SELECT * FROM award_list;
 
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('1', 'Oscar');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('2', 'Golden Globes');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('3', 'BAFTA Awards');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('4', 'C?sar Awards');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('5', 'Screen Actors Guild');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('6', 'Ника');
 
--- 12. Awarded movies
+-- 13. Awarded movies
 DROP TABLE IF EXISTS awards;
 CREATE TABLE awards (
  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -157,4 +196,13 @@ DESC awards;
 SELECT * FROM awards;
 
 
+-- Sumilar movies. Table for recommendations
+-- DROP TABLE IF EXISTS movie_like;
+-- CREATE TABLE movie_like (
+--  movie_id_1 INT UNSIGNED NOT NULL PRIMARY KEY,
+--  movie_id_2 INT UNSIGNED NOT NULL
+-- );
+-- DESC movie_like;
+-- SELECT * FROM movie_like;
+-- https://ru.stackoverflow.com/questions/180018/mysql-как-хранить-ключевые-слова-теги-к-посту-блога
 
