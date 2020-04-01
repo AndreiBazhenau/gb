@@ -1,4 +1,4 @@
-#
+##
 # TABLE STRUCTURE FOR: movie
 #
 
