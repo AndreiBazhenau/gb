@@ -1,6 +1,6 @@
 ##
 # TABLE STRUCTURE FOR: movie
-#
+#  100 movies
 
 DROP TABLE IF EXISTS `movie`;
 

@@ -62,11 +62,12 @@ CREATE TABLE genre (
 DESC genre;
 SELECT * FROM genre;
 
-
+-- =================================================================
 SELECT name, year, genre
 FROM movie JOIN genre ON movie.id = genre.movie_id
            JOIN genre_list ON genre.genre_id = genre_list.genre_id
 WHERE name = 'Molestias cupiditate ipsum voluptas in.';
+-- =================================================================
 
 
 -- 4. role types
@@ -90,7 +91,7 @@ INSERT INTO `roles` (`role_id`, `role`) VALUES ('7', 'cameraman');
 -- 5. staff
 DROP TABLE IF EXISTS staff;
 CREATE TABLE staff (
- staff_id INT UNSIGNED NOT NULL,
+ staff_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
  name VARCHAR(255) NOT NULL,
  f_name VARCHAR(255) NOT NULL,
  birthdate DATE,
@@ -113,6 +114,31 @@ DESC movie_staff;
 SELECT * FROM movie_staff;
 
 
+-- =================================================================
+
+-- Запрос имени фильма, годы выхода, жанра
+SELECT name, year, genre
+FROM movie JOIN genre ON movie.id = genre.movie_id
+           JOIN genre_list ON genre.genre_id = genre_list.genre_id
+WHERE name = 'Molestias cupiditate ipsum voluptas in.';
+-- =================================================================
+
+-- Запрос всех людей, принимавших участие в съёмках фильма
+-- Фильм намеренно может относиться одновременно к нескольким жанрам
+SELECT movie.name, year, genre, staff.name, f_name, role
+FROM movie JOIN genre ON movie.id = genre.movie_id
+           JOIN genre_list ON genre.genre_id = genre_list.genre_id
+           JOIN movie_staff ON movie.id = movie_staff.movie_id
+           JOIN staff ON movie_staff.staff_id = staff.staff_id
+           JOIN roles ON movie_staff.role_id = roles.role_id
+WHERE movie.name = 'Atque est doloribus aut in eveniet rerum debitis vel.';
+
+
+
+-- 'Molestias cupiditate ipsum voluptas in.'
+SELECT name, genre
+FROM movie
+WHER name = 'Atque est doloribus aut in eveniet rerum debitis vel.';
 
 -- 7. users
 DROP TABLE IF EXISTS users;
