@@ -132,13 +132,8 @@ FROM movie JOIN genre ON movie.id = genre.movie_id
            JOIN staff ON movie_staff.staff_id = staff.staff_id
            JOIN roles ON movie_staff.role_id = roles.role_id
 WHERE movie.name = 'Atque est doloribus aut in eveniet rerum debitis vel.';
+-- =================================================================
 
-
-
--- 'Molestias cupiditate ipsum voluptas in.'
-SELECT name, genre
-FROM movie
-WHER name = 'Atque est doloribus aut in eveniet rerum debitis vel.';
 
 -- 7. users
 DROP TABLE IF EXISTS users;
@@ -156,7 +151,7 @@ SELECT * FROM users;
 -- 8. reviews and marks
 DROP TABLE IF EXISTS review;
 CREATE TABLE review (
- movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
+ movie_id INT UNSIGNED NOT NULL,
  user_id INT UNSIGNED NOT NULL,
  mark TINYINT UNSIGNED,
  review_title VARCHAR(255),
