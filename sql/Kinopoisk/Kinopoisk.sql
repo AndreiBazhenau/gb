@@ -114,26 +114,6 @@ DESC movie_staff;
 SELECT * FROM movie_staff;
 
 
--- =================================================================
-
--- Запрос имени фильма, годы выхода, жанра
-SELECT name, year, genre
-FROM movie JOIN genre ON movie.id = genre.movie_id
-           JOIN genre_list ON genre.genre_id = genre_list.genre_id
-WHERE name = 'Molestias cupiditate ipsum voluptas in.';
--- =================================================================
-
--- Запрос всех людей, принимавших участие в съёмках фильма
--- Фильм намеренно может относиться одновременно к нескольким жанрам
-SELECT movie.name, year, genre, staff.name, f_name, role
-FROM movie JOIN genre ON movie.id = genre.movie_id
-           JOIN genre_list ON genre.genre_id = genre_list.genre_id
-           JOIN movie_staff ON movie.id = movie_staff.movie_id
-           JOIN staff ON movie_staff.staff_id = staff.staff_id
-           JOIN roles ON movie_staff.role_id = roles.role_id
-WHERE movie.name = 'Atque est doloribus aut in eveniet rerum debitis vel.';
--- =================================================================
-
 
 -- 7. users
 DROP TABLE IF EXISTS users;
@@ -161,28 +141,13 @@ DESC review;
 SELECT * FROM review;
 
 
--- 9. movie rating  ПЕРЕСЧИТЫВАЕТСЯ по триггеру раз в день
-DROP TABLE IF EXISTS rating;
-CREATE TABLE rating (
- movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
- kinopoisk_rating FLOAT(2) UNSIGNED,
- imdb_rating FLOAT(2) UNSIGNED
-);
-DESC rating;
-SELECT * FROM rating;
-
--- 10. TV show & episods
-DROP TABLE IF EXISTS tv_show;
-CREATE TABLE tv_show (
- movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
- number_seasons INT UNSIGNED,
- number_episods INT UNSIGNED
-);
-DESC tv_show;
-SELECT * FROM tv_show;
+-- Запрос среднего рейтинга фильма по его оценкам
+SELECT DISTINCT movie.name, AVG(mark) OVER(PARTITION BY movie_id)
+FROM review JOIN movie ON review.movie_id = movie.id;
 
 
--- 11. Media content & links
+
+-- 9. Media content & links
 DROP TABLE IF EXISTS media;
 CREATE TABLE media (
  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -190,24 +155,54 @@ CREATE TABLE media (
  trailer_link VARCHAR(255),
  picture_link VARCHAR(255)
 );
+DESC media;
+SELECT * FROM media;
 
--- 12. Awards list
+-- создание процедуры для заполнение таблицы media ссылками на постеры и трейлеры
+DELIMITER //
+DROP PROCEDURE IF EXISTS proc_links //
+CREATE PROCEDURE proc_links ()
+BEGIN
+	DECLARE i INT DEFAULT 1;
+    WHILE i < 101 DO
+        INSERT INTO media (movie_id, poster_link, trailer_link, picture_link)
+               VALUES (i, CONCAT('http://kinopoisk.ru/poster/',  i, '.jpg'),
+                          CONCAT('http://kinopoisk.ru/trailer',  i, '.mp4'),
+                          CONCAT('http://kinopoisk.ru/picture/', i, '.jpg'));
+        SET i = i + 1;
+    END WHILE;
+END//
+DELIMITER ;
+
+-- Вызов процедуры заполнения
+CALL proc_links();
+
+SELECT * FROM media;
+
+
+-- 10. Awards list
 DROP TABLE IF EXISTS award_list;
 CREATE TABLE award_list (
  award_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
  award_name VARCHAR(255)
 );
 DESC award_list;
-SELECT * FROM award_list;
+
 
 INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('1', 'Oscar');
 INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('2', 'Golden Globes');
 INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('3', 'BAFTA Awards');
-INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('4', 'C?sar Awards');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('4', 'Cèsar Awards');
 INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('5', 'Screen Actors Guild');
 INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('6', 'Ника');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('7', 'Cannes Film Festival');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('8', 'Berlin International Film Festival');
+INSERT INTO `award_list` (`award_id`, `award_name`) VALUES ('9', 'Venice Film Festival');
 
--- 13. Awarded movies
+SELECT * FROM award_list;
+
+
+-- 11. Awarded movies
 DROP TABLE IF EXISTS awards;
 CREATE TABLE awards (
  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -215,6 +210,37 @@ CREATE TABLE awards (
 );
 DESC awards;
 SELECT * FROM awards;
+
+
+
+-- СТАНДАРТНЕ ЗАПРОСЫ
+-- =================================================================
+
+-- Запрос имени фильма, годы выхода, жанра
+SELECT name, year, genre
+FROM movie JOIN genre ON movie.id = genre.movie_id
+           JOIN genre_list ON genre.genre_id = genre_list.genre_id
+WHERE name = 'Molestias cupiditate ipsum voluptas in.';
+-- =================================================================
+
+-- Запрос всех людей, принимавших участие в съёмках фильма
+-- Фильм намеренно может относиться одновременно к нескольким жанрам
+SELECT movie.name, year, genre, staff.name, f_name, role
+FROM movie JOIN genre ON movie.id = genre.movie_id
+           JOIN genre_list ON genre.genre_id = genre_list.genre_id
+           JOIN movie_staff ON movie.id = movie_staff.movie_id
+           JOIN staff ON movie_staff.staff_id = staff.staff_id
+           JOIN roles ON movie_staff.role_id = roles.role_id
+WHERE movie.name = 'Atque est doloribus aut in eveniet rerum debitis vel.';
+-- =================================================================
+
+-- Запрос фильмов, вышедьших после 2010 года и их жанров
+SELECT movie.name, movie.year, genre_list.genre
+FROM movie JOIN genre ON movie.id = genre.movie_id
+           JOIN genre_list ON genre.genre_id = genre_list.genre_id
+WHERE year > 2010;
+
+
 
 
 -- Sumilar movies. Table for recommendations
@@ -227,3 +253,23 @@ SELECT * FROM awards;
 -- SELECT * FROM movie_like;
 -- https://ru.stackoverflow.com/questions/180018/mysql-как-хранить-ключевые-слова-теги-к-посту-блога
 
+-- 9. movie rating  ПЕРЕСЧИТЫВАЕТСЯ по триггеру раз в день
+-- DROP TABLE IF EXISTS rating;
+-- CREATE TABLE rating (
+--  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
+--  kinopoisk_rating FLOAT(2) UNSIGNED,
+--  imdb_rating FLOAT(2) UNSIGNED
+-- );
+-- DESC rating;
+-- SELECT * FROM rating;
+
+
+-- 9. TV show & episods
+-- DROP TABLE IF EXISTS tv_show;
+-- CREATE TABLE tv_show (
+--  movie_id INT UNSIGNED NOT NULL PRIMARY KEY,
+--  number_seasons INT UNSIGNED,
+--  number_episods INT UNSIGNED
+-- );
+-- DESC tv_show;
+-- SELECT * FROM tv_show;
