@@ -19,6 +19,8 @@ ALTER TABLE messages
   ADD CONSTRAINT messages_to_user_id_fk
     FOREIGN KEY (to_user_id) REFERENCES users(id);
 
+-- один из вариантов просмотра созданных foreign key (лучше из консоли, чтобы увидеть всё)
+SHOW CREATE TABLE profiles;
 
 -- ==============
 -- 2. Подсчитать общее количество лайков, которые получили 10 самых молодых пользователей
