@@ -1,3 +1,6 @@
+# Исключение из комита датасета > 100 Мб
+ds_libs/creditcard.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
