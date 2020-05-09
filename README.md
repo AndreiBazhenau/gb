@@ -1,6 +1,6 @@
 # GeekBrains projects
 
-This repository contains code which was created during GeekBrains courses in Data Sciense course.
+This repository contains code which was created during GeekBrains courses in Data Sciense faculty.
 
 FOLDERS:
 
