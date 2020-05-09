@@ -1,0 +1,1 @@
+[{"Facebook": 5000, "Uber": -9000, "Microsoft": 20000, "Netflix": -10000, "Apple": 10000}, {"average_profit": 11666.666666666666}]
