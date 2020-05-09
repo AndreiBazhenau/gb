@@ -6,4 +6,5 @@ FOLDERS:
 
 1. algorythms - algorythms course
 2. sql - SQL course
-3. ds_libs - Python libraries for Data Science: Numpy, Matplotlib, Scikit-learn
+3. python - Python course
+4. ds_libs - Python libraries for Data Science: Numpy, Matplotlib, Scikit-learn
