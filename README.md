@@ -8,3 +8,4 @@ FOLDERS:
 2. sql - SQL course
 3. python - Python course
 4. ds_libs - Python libraries for Data Science: Numpy, Pandas, Matplotlib, Scikit-learn
+5. html_css - html & css course
