@@ -12,6 +12,14 @@ body {
     color: darkslategrey;
 }
 
+.menu li a:hover {
+    color: black;
+}
+
+.product_img {
+    outline: 1px solid gray;
+}
+
 .heading {
     color: black;
     font-size: 18px;
@@ -41,10 +49,11 @@ body {
     list-style-type: square;
 }
 
-.form1 {
-    width: 200px;
+input[type='text'], select {
+    width: 250px;
     height: 20px;
     font-size: 14px;
+    font-style: italic;
 }
 
 ::placeholder {
