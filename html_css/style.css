@@ -2,6 +2,8 @@ body {
     background: #f8f8f8;
 }
 
+
+
 .menu li {
     font-style : italic;
     font-size : 20px;
@@ -49,13 +51,26 @@ body {
     list-style-type: square;
 }
 
-input[type='text'], select {
+input[type='text'] {
     width: 250px;
     height: 20px;
     font-size: 14px;
     font-style: italic;
+    text-transform: capitalize;
 }
+
+.textarea[name="textarea"] {
+    text-transform: capitalize;
+    
+}
+
 
 ::placeholder {
     color: darkgray;
 }
+
+.email:focus {
+    background-color: lightsteelblue;
+    color: darkblue;
+}
+
