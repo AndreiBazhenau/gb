@@ -57,7 +57,7 @@ input[type='text'] {
     text-transform: capitalize;
 }
 
-.textarea[name="textarea"] {
+textarea[name="textarea"] {
     text-transform: capitalize;
     
 }
