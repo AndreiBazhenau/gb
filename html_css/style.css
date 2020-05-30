@@ -2,8 +2,6 @@ body {
     background: #f8f8f8;
 }
 
-
-
 .menu li {
     font-style : italic;
     font-size : 20px;
@@ -64,13 +62,34 @@ input[type='text'] {
     
 }
 
-
 ::placeholder {
     color: darkgray;
 }
 
 .email:focus {
     background-color: lightsteelblue;
-    color: darkblue;
+    color: red;
+}
+
+table {
+    border: 5x solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 50px;
+}
+
+td {
+    border: 1px solid black;
+}
+
+.item_img {
+    outline: 2px solid gray;
+}
+.item_img:hover {
+    outline: #f8f8f8;
+}
+
+.capitalize_first_letter:first-letter {
+    font-size: 30px;
 }
 
