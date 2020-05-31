@@ -86,7 +86,7 @@ td {
     outline: 2px solid gray;
 }
 .item_img:hover {
-    outline: #f8f8f8;
+    outline: none;
 }
 
 .capitalize_first_letter:first-letter {
