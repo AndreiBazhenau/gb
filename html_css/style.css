@@ -1,11 +1,44 @@
+.container {
+    width: 700px;
+    margin: 0 auto;
+    
+}
+
 body {
     background: #f8f8f8;
 }
+
+.logo {
+        float: left;
+}
+
+.header {
+    height: 180px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    
+}
+
+.footer {
+    height: 100px;
+    width: 700px;
+    background-color: #F5F5F5;
+    padding-right: 20px;
+    padding-top: 10px;
+    text-align: right;
+    clear: both;
+}
+
 
 .menu li {
     font-style : italic;
     font-size : 20px;
     list-style-type : none;
+    display: inline;
+    padding-left: 20px;
+    float: right; 
+
 }
 
 .menu li a {
@@ -18,13 +51,15 @@ body {
 
 .product_img {
     outline: 1px solid gray;
+
 }
 
 .heading {
     color: black;
     font-size: 18px;
     font-weight: 400;
-    background-color: #eaeaea
+    background-color: #eaeaea;
+
 }
 
 .short-description {
@@ -32,6 +67,7 @@ body {
     font: 14px;
     font-style: italic;
     line-height: 16px;
+    padding-left: 15px;
 }
 
 .detailed-description {
@@ -55,6 +91,14 @@ input[type='text'] {
     font-size: 14px;
     font-style: italic;
     text-transform: capitalize;
+}
+
+input[type='button']:hover {
+    background-color: white;
+}
+
+input[type='button']:active {
+    color: navajowhite;
 }
 
 textarea[name="textarea"] {
@@ -84,9 +128,20 @@ td {
 
 .item_img {
     outline: 2px solid gray;
+    float: left;
+    margin-right: 25px;
 }
+
 .item_img:hover {
     outline: none;
+}
+
+.product {
+    width: 100px;
+    height: 148px;
+
+    float: left;
+    padding-left: 5px;
 }
 
 .capitalize_first_letter:first-letter {
