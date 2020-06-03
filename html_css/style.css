@@ -166,3 +166,9 @@ td {
 .capitalize_first_letter:first-letter {
     font-size: 30px;
 }
+
+form {
+    width: 310px;
+    padding: 10px;
+    border: 1px solid black;
+}
