@@ -1,7 +1,11 @@
 .container {
-    width: 700px;
+    width: 1000px;
     margin: 0 auto;
     
+}
+
+div {
+    display: block;
 }
 
 body {
@@ -9,36 +13,43 @@ body {
 }
 
 .logo {
-        float: left;
+    float: left;
+    margin: 10px 20px;
 }
 
 .header {
-    height: 180px;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-right: 20px;
+    height: 190px;
+
+    background: url(https://images.clipartlogo.com/files/istock/previews/8049/80496347-abstract-seamless-dot-background-pattern.jpg);
+    background-size: 20%
     
 }
 
 .footer {
     height: 100px;
-    width: 700px;
+    width: 1000px;
     background-color: #F5F5F5;
-    padding-right: 20px;
-    padding-top: 10px;
+    padding-right: 24px;
+    padding-top: 5px;
+    box-sizing: border-box;
     text-align: right;
     clear: both;
 }
 
+.menu{
+    width: 360px;
+    height: 58px;
+    float: right;
+    margin-left: 300px;
+    background-color: #F8F8F8;
+}
 
-.menu li {
+.menu ul li {
     font-style : italic;
     font-size : 20px;
     list-style-type : none;
-    display: inline;
-    padding-left: 20px;
-    float: right; 
-
+    margin: 0px 10px;
+    float: left; 
 }
 
 .menu li a {
@@ -67,7 +78,7 @@ body {
     font: 14px;
     font-style: italic;
     line-height: 16px;
-    padding-left: 15px;
+    overflow: hidden;
 }
 
 .detailed-description {
@@ -86,7 +97,7 @@ body {
 }
 
 input[type='text'] {
-    width: 250px;
+    width: 300px;
     height: 20px;
     font-size: 14px;
     font-style: italic;
@@ -136,12 +147,20 @@ td {
     outline: none;
 }
 
+.items {
+    height: 160px;
+    display: flex;
+}
+
 .product {
     width: 100px;
-    height: 148px;
-
     float: left;
-    padding-left: 5px;
+    padding-left: 10px;
+}
+
+.caption {
+    clear: both;
+    padding-top: 20px;
 }
 
 .capitalize_first_letter:first-letter {
