@@ -12,10 +12,18 @@ headers = {'User-Agent': 'Chrome/83.0.4103.61',
 try:
     response = requests.get(main_link + user + '/' + info, headers=headers, timeout=5)
     data = response.json()
+    print(response.text)
     repos_list = []
     for repo in data:
         print(repo['html_url'])
         repos_list.append(repo['html_url'])
+    try:
+        with open(f"github_repos_{user}.json.txt", "w", encoding="utf-8") as file_obj:
+            for _ in repos_list:
+                json.dump(_, file_obj)
+                file_obj.write('\n')
+    except IOError:
+        print("Ошибка")
 
 except requests.exceptions.ConnectTimeout:
     print('Connection timeout')
@@ -23,12 +31,9 @@ except requests.exceptions.ReadTimeout:
     print('Read timeout')
 except requests.exceptions.HTTPError as e:
     print('Http error: %s' % e)
+except requests.exceptions.ConnectionError:
+    print('Connection error')
+except requests.exceptions.RequestException:
+    print('General Error')
 
 
-try:
-    with open(f"github_repos_{user}.json.txt", "w", encoding="utf-8") as file_obj:
-        for _ in repos_list:
-            json.dump(_, file_obj)
-            file_obj.write('\n')
-except IOError:
-    print("Ошибка")
