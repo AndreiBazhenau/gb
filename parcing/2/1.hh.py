@@ -14,7 +14,7 @@ try:
     soup = bs(response.text, 'lxml')
 
     #elem = soup.find_all(attrs={'class': 'bloko-link HH-LinkModifier'})
-    elem = soup.find_all('a',{'class': 'bloko-link HH-LinkModifier'})
+    elem = soup.find_all('a', {'class': 'bloko-link HH-LinkModifier'})
     pprint(elem)
 
 except requests.exceptions.ConnectTimeout:
