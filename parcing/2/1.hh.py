@@ -3,6 +3,8 @@ import requests
 import pandas as pd
 import os
 
+### /xa0 - неразрывный пробел
+
 def get_salary(s):
     def get_currency(s):
         s_len = len(s)
@@ -20,19 +22,19 @@ def get_salary(s):
     if s.startswith('от'):
         s = s.replace('от', '')
         cur = get_currency(s)
-        s_min = s.replace(cur, '')
+        s_min = int(s.replace(cur, ''))
         s_max = 'NA'
     elif s.startswith('до'):
         s = s.replace('до', '')
         cur = get_currency(s)
-        s_max = s.replace(cur, '')
+        s_max = int(s.replace(cur, ''))
         s_min = 'NA'
     elif s.find('-') >= 5:
         pos = s.find('-')
-        s_min = s[:pos]
+        s_min = int(s[:pos])
         s_max = s[pos + 1:]
         cur = get_currency(s_max)
-        s_max = s_max.replace(cur, '')
+        s_max = int(s_max.replace(cur, ''))
     else:
         s_min = 'NA'
         s_max = 'NA'
