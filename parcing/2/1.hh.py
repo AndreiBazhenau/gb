@@ -43,7 +43,7 @@ def get_salary(s):
 
 site = 'https://spb.hh.ru/search/vacancy?'
 area = 'area=2'
-search = 'python'  # data+scientist  python
+search = 'data+scientist'  # data+scientist  python
 headers = {'User-Agent': 'api-test-agent', 'Accept': '*/*'}
 
 link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true'
@@ -110,4 +110,6 @@ except requests.exceptions.RequestException:
 
 print(df.to_string())
 desktop_link = os.path.join(os.path.join(os.environ['userprofile']), 'Desktop')
-df.to_csv(f'{desktop_link}\hh_{search}.csv', index=False, encoding='utf-8')
+writer = pd.ExcelWriter(f'{desktop_link}\hh_{search}.xlsx', engine='xlsxwriter')
+df.to_excel(writer, sheet_name=f'{search}')
+writer.save()
