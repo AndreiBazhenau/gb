@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup as bs
 import requests
 import pandas as pd
-
+import os
 
 def get_salary(s):
     def get_currency(s):
@@ -109,4 +109,5 @@ except requests.exceptions.RequestException:
     print('General Error')
 
 print(df.to_string())
-df.to_csv(f'hh_{search}.csv', index=False, encoding='utf-8')
+desktop_link = os.path.join(os.path.join(os.environ['userprofile']), 'Desktop')
+df.to_csv(f'{desktop_link}\hh_{search}.csv', index=False, encoding='utf-8')
