@@ -61,3 +61,6 @@ except requests.exceptions.RequestException:
     print('General Error')
 
 print(df.to_string())
+df.to_csv(f'hh_{search}.csv', index=False, encoding='utf-8')
+print('Export done!')
+
