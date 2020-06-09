@@ -2,16 +2,12 @@ from bs4 import BeautifulSoup as bs
 import requests
 import pandas as pd
 
-# https://spb.hh.ru/search/vacancy?area=1&st=searchVacancy&text=data+scientist&fromSearch=true
 site = 'https://spb.hh.ru/search/vacancy?'
 area = 'area=2'
 search = 'data+scientist'  # data+scientist  python
 headers = {'User-Agent': 'api-test-agent', 'Accept': '*/*'}
 
 link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true'
-# <a class="bloko-link HH-LinkModifier" data-position="0" data-qa="vacancy-serp__vacancy-title"
-# data-requestid="1591655510397b99f8b5c9ac3c44ccd6" data-totalvacancies="54"
-# href="https://spb.hh.ru/vacancy/37369353?query=data%20scientist" target="_blank">Data Scientist</a>
 
 next_page = '#'
 df = pd.DataFrame(columns=['Vacancy', 'Salary', 'Company', 'Link'])
