@@ -3,7 +3,6 @@ import requests
 import pandas as pd
 import os
 
-### /xa0 - неразрывный пробел
 
 def get_salary(s):
     def get_currency(s):
@@ -66,7 +65,7 @@ try:
             salary = tag.find('span', {'data-qa': 'vacancy-serp__vacancy-compensation'})
             if salary:
                 # print(salary.get_text())
-                salary = salary.get_text().replace(" ", "").replace(" ", "")
+                salary = salary.get_text().replace(" ", "").replace("\xa0", "")
                 s_min, s_max, cur = get_salary(salary)
                 # print(s_min, s_max, cur)
             else:
