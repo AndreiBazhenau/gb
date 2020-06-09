@@ -60,13 +60,13 @@ try:
         for tag in soup.find_all('div', {'class': 'vacancy-serp-item'}):
             # print(tag)
             vacancy = tag.find('a', {'class': 'bloko-link HH-LinkModifier'})
-            print(f"{i}: {vacancy.get_text()} : {vacancy['href']}")
+            # print(f"{i}: {vacancy.get_text()} : {vacancy['href']}")
             salary = tag.find('span', {'data-qa': 'vacancy-serp__vacancy-compensation'})
             if salary:
                 # print(salary.get_text())
                 salary = salary.get_text().replace(" ", "").replace(" ", "")
                 s_min, s_max, cur = get_salary(salary)
-                print(s_min, s_max, cur)
+                # print(s_min, s_max, cur)
             else:
                 s_min, s_max, cur = 'NA', 'NA', 'NA'
 
@@ -78,9 +78,12 @@ try:
             #     #print("NA")
 
             company = tag.find('a', {'data-qa': 'vacancy-serp__vacancy-employer'})
-            print(company)
+            if not company:
+                company = tag.find('div', {'class': 'vacancy-serp-item__meta-info'})
+            # print(company)
 
             df.loc[i] = ['hh.ru', vacancy.get_text(), s_min, s_max, cur, company.get_text(strip=True), vacancy['href']]
+            print(i, vacancy.get_text(), s_min, s_max, cur, company.get_text(strip=True), vacancy['href'])
             i += 1
             salary = ''
 
@@ -88,7 +91,7 @@ try:
 
         if next_page_link:
             next_page = next_page_link['href']
-            print(next_page_link['href'])
+            # print(next_page_link['href'])
         else:
             next_page = ''
             # print('No more vacancies')
