@@ -10,7 +10,7 @@ headers = {'User-Agent': 'api-test-agent', 'Accept': '*/*'}
 link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true'
 
 next_page = '#'
-df = pd.DataFrame(columns=['Vacancy', 'Salary', 'Company', 'Link'])
+df = pd.DataFrame(columns=['Site', 'Vacancy', 'Salary', 'Company', 'Link'])
 i = 1
 try:
     while next_page:
@@ -23,14 +23,20 @@ try:
             vacancy = tag.find('a', {'class': 'bloko-link HH-LinkModifier'})
             # print(f"{i}: {vacancy.get_text()} : {vacancy['href']}")
             salary = tag.find('span', {'data-qa': 'vacancy-serp__vacancy-compensation'})
-            # if salary:
-            #     print(salary.get_text())
+            if salary:
+                # print(salary.get_text())
+                salary = salary.get_text().replace(" ", "").replace(" ", "")
+                # print(salary)
+                if salary.startswith('от'):
+                    salary = salary.replace("от", "")
+                    salary_min = salary
             # else:
-            #     print("NA")
+                #print("NA")
+
             company = tag.find('a', {'data-qa': 'vacancy-serp__vacancy-employer'})
             # print(company)
 
-            df.loc[i] = [vacancy.get_text(), salary, company.get_text(strip=True), vacancy['href']]
+            df.loc[i] = ['hh.ru', vacancy.get_text(), salary, company.get_text(strip=True), vacancy['href']]
             i += 1
             salary = ''
 
