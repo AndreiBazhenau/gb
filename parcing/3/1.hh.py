@@ -86,8 +86,11 @@ try:
                         'site': 'hh.ru',
                         'city': f'{city}',
                         'company': f'{company.get_text(strip=True)}',
-                        'salary': {'min': f'{s_min}', 'max': f'{s_max}', 'currency': f'{cur}'},
-                        'link': f'{vacancy["href"]}'  })
+                        # 'salary': {'min': f'{s_min}', 'max': f'{s_max}', 'currency': f'{cur}'},
+                        'min_salary': f'{s_min}',
+                        'max_salary': f'{s_max}',
+                        'currency': f'{cur}',
+                        'link': f'{vacancy["href"]}'})
                 i += 1
                 salary = ''
             next_page_link = soup.find('a', {'class': 'bloko-button HH-Pager-Controls-Next HH-Pager-Control'})
