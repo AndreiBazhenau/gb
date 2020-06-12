@@ -81,16 +81,16 @@ try:
                 print(i, city, vacancy.get_text(), s_min, s_max, cur, company.get_text(strip=True), vacancy['href'])
 
                 vac.insert_one({
-                        'search': f'{search}',
-                        'position': f'{vacancy.get_text()}',
+                        'search': search,
+                        'position': vacancy.get_text(),
                         'site': 'hh.ru',
-                        'city': f'{city}',
-                        'company': f'{company.get_text(strip=True)}',
-                        # 'salary': {'min': f'{s_min}', 'max': f'{s_max}', 'currency': f'{cur}'},
-                        'min_salary': f'{s_min}',
-                        'max_salary': f'{s_max}',
-                        'currency': f'{cur}',
-                        'link': f'{vacancy["href"]}'})
+                        'city': city,
+                        'company': company.get_text(strip=True),
+                        # 'salary': {'min': s_min, 'max': s_max, 'currency': cur},
+                        'min_salary': s_min,
+                        'max_salary': s_max,
+                        'currency': cur,
+                        'link': vacancy["href"]})
                 i += 1
                 salary = ''
             next_page_link = soup.find('a', {'class': 'bloko-button HH-Pager-Controls-Next HH-Pager-Control'})
