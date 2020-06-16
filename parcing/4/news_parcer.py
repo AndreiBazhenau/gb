@@ -15,15 +15,6 @@ site = 'https://m.lenta.ru/parts/news'
 response = requests.get(site, headers=header)
 dom = html.fromstring(response.text)
 
-# results = dom.xpath("//div[contains(@class,'item')]")
-# i = 1
-# for result in results:
-#     news_text = result.xpath(".//a/text()")
-#     news_link = result.xpath(".//@href")
-#     if len(news_text) > 0:
-#         print(i, news_text[0], news_link)
-#     i += 1
-
 results = dom.xpath("//div[@class='parts-page__item']")
 i = 1
 for result in results:
