@@ -49,7 +49,7 @@ site = 'https://hh.ru/search/vacancy?'
 #area = 'area=2'
 areas = ['area=2', 'area=1']
 search = 'data+scientist'  # data+scientist  python
-headers = {'User-Agent': 'api-test-agent', 'Accept': '*/*'}
+headers = {'User-Agent': 'Chrome/80.0.4150.1', 'Accept': '*/*'}
 
 # link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true'
 
