@@ -5,21 +5,31 @@
 
 from lxml import html
 import requests
-from pprint import pprint
+from datetime import datetime, date, time
+
 
 header = {'User-Agent': 'Chrome/80.0.4150.1'}
 
-site = 'https://lenta.ru'
+site = 'https://m.lenta.ru/parts/news'
 
 response = requests.get(site, headers=header)
 dom = html.fromstring(response.text)
-#pprint(dom)
-results = dom.xpath("//div[contains(@class,'item')]")
+
+# results = dom.xpath("//div[contains(@class,'item')]")
+# i = 1
+# for result in results:
+#     news_text = result.xpath(".//a/text()")
+#     news_link = result.xpath(".//@href")
+#     if len(news_text) > 0:
+#         print(i, news_text[0], news_link)
+#     i += 1
+
+results = dom.xpath("//div[@class='parts-page__item']")
 i = 1
 for result in results:
-    news_text = result.xpath(".//a/text()")
-    news_link = result.xpath(".//@href")
-    if len(news_text) > 0:
-        print(i, news_text[0], news_link)
+    news_text = result.xpath(".//div[@class='card-mini__title']/text()")[0]
+    news_link = result.xpath(".//@href")[0]
+    news_link = news_link if news_link.find('http') != -1 else 'https://lenta.ru' + news_link
+    news_time = result.xpath(".//time/text()")[0]
+    print(i, site, news_text, news_link, news_time, datetime.today().strftime('%d-%m-%Y'))
     i += 1
-
