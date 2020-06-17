@@ -5,8 +5,10 @@
 
 from lxml import html
 import requests
-from datetime import datetime, timedelta
+from datetime import timedelta, datetime
 from pprint import pprint
+from pymongo import MongoClient
+
 
 header = {'User-Agent': 'Chrome/80.0.4150.1'}
 
@@ -34,12 +36,13 @@ news = []
 for result in results:
     item = {}
     news_link = result.xpath(".//@href")[0]
-    item['link'] = site + news_link
+    news_link = news_link if news_link.find('http') != -1 else site + news_link
+    item['link'] = news_link if news_link.find('http') != -1 else site + news_link
     item['title'] = result.xpath(".//text()")[0].replace("\xa0", " ")
-    response1 = requests.get(site + news_link, headers=header)
+    response1 = requests.get(news_link, headers=header)
     dom1 = html.fromstring(response1.text)
-    datetime = dom1.xpath('.//@datetime')[0]
-    item['date'] = datetime.replace("T", " ").replace("+03:00", "")
+    date_time = dom1.xpath('.//@datetime')[0] if dom1.xpath('.//@datetime')[0] else 'Новость без даты'
+    item['date'] = date_time.replace("T", " ").replace("+03:00", "") if date_time else 'Новость без даты'
     item['source'] = dom1.xpath('//span[@class="note"]//span[@class="link__text"]/text()')[0]
     news.append(item)
 
@@ -52,20 +55,22 @@ news = []
 for result in results:
     item = {}
     news_link = result.xpath(".//h2//@href")[0]
-
     item['link'] = site + news_link
     source_date = result.xpath('.//div[@class="story__date"]/text()')[0].replace("\xa0", " ")
     if source_date.find(' вчера в ') > -1:
         pos = source_date.find(' вчера в ')
         item['source'] = source_date[:pos]
         item['pos'] = pos
-        item['date'] = source_date[pos + 9:] + ' ' + (datetime.today() - timedelta(days=1)).strftime('%d-%m-%Y')
+        item['date'] = source_date[pos + 9:] + ' ' + (datetime.now() - timedelta(days=1)).strftime('%d-%m-%Y')
     else:
         item['source'] = source_date[:-6]
         item['date'] = source_date[-5:]
 
     item['title'] = result.xpath(".//h2//text()")[0]
     news.append(item)
-
 pprint(news)
 
+client = MongoClient('localhost', 27017)
+db = client['news']
+news_db = db.news_db
+news_db.insert_many(news)
