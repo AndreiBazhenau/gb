@@ -1,11 +1,7 @@
 from bs4 import BeautifulSoup as bs
 import requests
 from pymongo import MongoClient
-import time
 
-client = MongoClient('localhost', 27017)
-db = client['vacancy']
-vac = db.vac
 
 def get_salary(s):
     def get_currency(s):
@@ -50,65 +46,55 @@ site = 'https://hh.ru/search/vacancy?'
 areas = ['area=2', 'area=1']
 search = 'data+scientist'  # data+scientist  python
 headers = {'User-Agent': 'Chrome/80.0.4150.1', 'Accept': '*/*'}
+items = []
 
 # link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true'
 
-
 i = 1
-try:
-    for area in areas:
-        link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true'
-        # print(area)
-        next_page = '#'
-        while next_page:
+for area in areas:
+    link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true'
+    next_page = '#'
+    while next_page:
+        try:
+            print(link)
             response = requests.get(link, headers=headers, timeout=5).text
-            soup = bs(response, 'lxml')
-            if area == 'area=2':
-                city = 'Spb'
+        except requests.exceptions.RequestException:
+            print('General Error')
+
+        soup = bs(response, 'lxml')
+        if area == 'area=2':
+            city = 'Spb'
+        else:
+            city = 'Msk'
+        for tag in soup.find_all('div', {'class': 'vacancy-serp-item'}):
+            vacancy = tag.find('a', {'class': 'bloko-link HH-LinkModifier'})
+            salary = tag.find('span', {'data-qa': 'vacancy-serp__vacancy-compensation'})
+            if salary:
+                salary = salary.get_text().replace(" ", "").replace("\xa0", "")  # неразрывный пробел в зп
+                s_min, s_max, cur = get_salary(salary)
             else:
-                city = 'Msk'
-            for tag in soup.find_all('div', {'class': 'vacancy-serp-item'}):
-                vacancy = tag.find('a', {'class': 'bloko-link HH-LinkModifier'})
-                salary = tag.find('span', {'data-qa': 'vacancy-serp__vacancy-compensation'})
-                if salary:
-                    salary = salary.get_text().replace(" ", "").replace("\xa0", "")  # неразрывный пробел в зп
-                    s_min, s_max, cur = get_salary(salary)
-                else:
-                    s_min, s_max, cur = 'NA', 'NA', 'NA'
-                company = tag.find('a', {'data-qa': 'vacancy-serp__vacancy-employer'})
-                if not company:
-                    company = tag.find('div', {'class': 'vacancy-serp-item__meta-info'})
-                print(i, city, vacancy.get_text(), s_min, s_max, cur, company.get_text(strip=True), vacancy['href'])
+                s_min, s_max, cur = 'NA', 'NA', 'NA'
+            company = tag.find('a', {'data-qa': 'vacancy-serp__vacancy-employer'})
+            if not company:
+                company = tag.find('div', {'class': 'vacancy-serp-item__meta-info'})
+            print(i, city, vacancy.get_text(), s_min, s_max, cur, company.get_text(strip=True), vacancy['href'])
 
-                vac.insert_one({
-                        'search': search,
-                        'position': vacancy.get_text(),
-                        'site': 'hh.ru',
-                        'city': city,
-                        'company': company.get_text(strip=True),
-                        # 'salary': {'min': s_min, 'max': s_max, 'currency': cur},
-                        'min_salary': s_min,
-                        'max_salary': s_max,
-                        'currency': cur,
-                        'link': vacancy["href"]})
-                i += 1
-                salary = ''
-            next_page_link = soup.find('a', {'class': 'bloko-button HH-Pager-Controls-Next HH-Pager-Control'})
-            #time.sleep(1)
-            if next_page_link:
-                next_page = next_page_link['href']
-            else:
-                next_page = ''
-            link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true' + next_page
+            item = {'search': search, 'position': vacancy.get_text(), 'site': 'hh.ru', 'city': city,
+                    'company': company.get_text(strip=True), 'min_salary': s_min, 'max_salary': s_max,
+                    'currency': cur, 'link': vacancy['href']}
+            items.append(item)
+            i += 1
+            salary = ''
+        next_page_link = soup.find('a', {"data-qa": "pager-next"})
+        if next_page_link:
+            next_page = next_page_link['href']
+            print('next page = ', next_page)
+        else:
+            next_page = ''
+        link = 'https://hh.ru' + next_page
+        print(link)
 
-
-except requests.exceptions.ConnectTimeout:
-    print('Connection timeout')
-except requests.exceptions.ReadTimeout:
-    print('Read timeout')
-except requests.exceptions.HTTPError as e:
-    print('Http error: %s' % e)
-except requests.exceptions.ConnectionError:
-    print('Connection error')
-except requests.exceptions.RequestException:
-    print('General Error')
+client = MongoClient('localhost', 27017)
+db = client['vacancy']
+vac = db.vac
+vac.insert_many(items)
