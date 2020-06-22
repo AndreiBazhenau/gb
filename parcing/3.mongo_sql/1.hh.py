@@ -16,7 +16,6 @@ def get_salary(s):
                 cur = cur + a
                 i += 1
         return cur
-
     if s.startswith('от'):
         s = s.replace('от', '')
         cur = get_currency(s)
@@ -37,18 +36,14 @@ def get_salary(s):
         s_min = 'NA'
         s_max = 'NA'
         cur = 'NA'
-
     return s_min, s_max, cur
 
 
 site = 'https://hh.ru/search/vacancy?'
-#area = 'area=2'
 areas = ['area=2', 'area=1']
 search = 'data+scientist'  # data+scientist  python
 headers = {'User-Agent': 'Chrome/80.0.4150.1', 'Accept': '*/*'}
 items = []
-
-# link = site + area + '&st=searchVacancy&text=' + search + '&fromSearch=true'
 
 i = 1
 for area in areas:
@@ -56,7 +51,6 @@ for area in areas:
     next_page = '#'
     while next_page:
         try:
-            print(link)
             response = requests.get(link, headers=headers, timeout=5).text
         except requests.exceptions.RequestException:
             print('General Error')
@@ -88,11 +82,9 @@ for area in areas:
         next_page_link = soup.find('a', {"data-qa": "pager-next"})
         if next_page_link:
             next_page = next_page_link['href']
-            print('next page = ', next_page)
         else:
             next_page = ''
         link = 'https://hh.ru' + next_page
-        print(link)
 
 client = MongoClient('localhost', 27017)
 db = client['vacancy']
