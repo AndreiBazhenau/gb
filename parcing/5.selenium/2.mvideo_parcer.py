@@ -16,11 +16,21 @@ assert 'М.Видео - интернет-магазин цифровой и бы
 
 time.sleep(5)
 elem1 = driver.find_element_by_class_name('c-product-tile').text #.get_property('data-product-info')
-print(elem1)
+#print(elem1)
 
-elem = driver.find_element_by_partial_link_text('Хиты продаж')
-print(elem)
+# blocks = driver.find_element('gtm-push-products')
+blocks = WebDriverWait(driver, 5).until(ec.element_to_be_clickable((By.XPATH, "(//div[@class='gallery-layout sel-hits-block '])[2]"))).text
+print(blocks)
 
+print(" ====== ")
 
+block = WebDriverWait(driver, 5).until(ec.element_to_be_clickable((By.XPATH, "(//div[@class='gallery-layout sel-hits-block '])[2]"))).get_attribute('data-init-param')
+print(block)
 
-# //div[contains(@class, "c-product-tile")]
+print(" ====== ")
+#block15 = WebDriverWait(driver, 5).until(ec.element_to_be_clickable((By.XPATH, "((//div[@class='gallery-layout sel-hits-block '])[2]//ul//@data-product-info")))
+
+block1 = driver.find_elements_by_xpath("//div[@class='gallery-layout sel-hits-block ']//ul//@data-product-info")
+print(block1)
+
+# https://stackoverflow.com/questions/4531995/getting-attribute-using-xpath
