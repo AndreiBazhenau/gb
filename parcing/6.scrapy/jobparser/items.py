@@ -8,7 +8,8 @@
 import scrapy
 
 
-class JobparserItem(scrapy.Item):       #Создаем структуру item'a
+class JobparserItem(scrapy.Item):       # Создаем структуру item'a
     _id = scrapy.Field()
     name = scrapy.Field()
     salary = scrapy.Field()
+    
