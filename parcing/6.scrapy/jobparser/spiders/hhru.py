@@ -4,10 +4,13 @@ from scrapy.http import HtmlResponse        # Для подсказок объе
 from jobparser.items import JobparserItem   # Подключаем класс из items
 
 
+# def в классе - это не функция, а метод класса
+# первый аргумент self метода - общепринятое имя для ссылки на объект, в контексте которого
+# вызывается метод. Этот параметр обязателен и отличает метод класса от обычной функции.
 class HhruSpider(scrapy.Spider):
     name = 'hhru'                           # Имя паука
     allowed_domains = ['hh.ru']             # Домен в рамках которого работаем
-    search = 'python'
+    search = 'data scientist'
     # Стартовая ссылка (точка входа)
     start_urls = [f'https://hh.ru/search/vacancy?L_save_area=true&clusters=true&enable_snippets=true&text={search}&showClusters=true']
 
@@ -27,4 +30,8 @@ class HhruSpider(scrapy.Spider):
     def vacansy_parse(self, response: HtmlResponse):                        # Здесь обрабатываем информацию по вакансии
         name_job = response.xpath('//h1/text()').extract_first()            # Получаем наименование вакансии
         salary_job = response.css('p.vacancy-salary span::text').extract()  # Получаем зарплату в виде списка отдельных блоков
-        yield JobparserItem(name=name_job, salary=salary_job)               # Передаем данные в item для создания структуры json
+        city_job = response.xpath('//p[@data-qa="vacancy-view-location"]//text()').extract()
+        position_link = response.url
+        company_job = response.xpath('//span[@class="bloko-section-header-2 bloko-section-header-2_lite"]/text()').extract()
+        yield JobparserItem(name=name_job, salary=salary_job, city=city_job,
+                            link=position_link, company=company_job)   # Передаем данные в item для создания структуры json
