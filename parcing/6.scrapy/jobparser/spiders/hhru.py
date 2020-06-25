@@ -8,7 +8,7 @@ class HhruSpider(scrapy.Spider):
     allowed_domains = ['hh.ru']             #Домен в рамках которого работаем
 
     #Стартовая ссылка (точка входа)
-    start_urls = ['https://izhevsk.hh.ru/search/vacancy?L_save_area=true&clusters=true&enable_snippets=true&text=python&showClusters=true']
+    start_urls = ['https://hh.ru/search/vacancy?L_save_area=true&clusters=true&enable_snippets=true&text=python&showClusters=true']
 
     def parse(self, response:HtmlResponse):     #С этого метода все и начинается (в response - первый ответ)
         #Ищем ссылку для перехода на следующую страницу
