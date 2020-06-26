@@ -17,3 +17,5 @@ class JobparserItem(scrapy.Item):       # Создаем структуру item
     salary_min = scrapy.Field()
     salary_max = scrapy.Field()
     company = scrapy.Field()
+    currency = scrapy.Field()
+    site = scrapy.Field()
