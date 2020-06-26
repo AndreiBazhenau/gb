@@ -17,7 +17,7 @@ class HhruSpider(scrapy.Spider):
     def parse(self, response: HtmlResponse):     # С этого метода все и начинается (в response - первый ответ)
         # Ищем ссылку для перехода на следующую страницу
         next_page = response.css('a.HH-Pager-Controls-Next.HH-Pager-Control::attr(href)').extract_first()
-
+        print(next_page)
         # Ищем на полученной странице ссылки на вакансии
         vacansy_links = response.css('div.vacancy-serp div.vacancy-serp-item a.HH-LinkModifier::attr(href)').extract()
         for link in vacansy_links:          #Перебираем ссылки
@@ -30,8 +30,8 @@ class HhruSpider(scrapy.Spider):
     def vacansy_parse(self, response: HtmlResponse):                        # Здесь обрабатываем информацию по вакансии
         name_job = response.xpath('//h1/text()').extract_first()            # Получаем наименование вакансии
         salary_job = response.css('p.vacancy-salary span::text').extract()  # Получаем зарплату в виде списка отдельных блоков
-        city_job = response.xpath('//p[@data-qa="vacancy-view-location"]//text()').extract()
+        location_job = response.xpath('//p[@data-qa="vacancy-view-location"]//text()').extract()
         position_link = response.url
         company_job = response.xpath('//span[@class="bloko-section-header-2 bloko-section-header-2_lite"]/text()').extract()
-        yield JobparserItem(name=name_job, salary=salary_job, city=city_job,
+        yield JobparserItem(name=name_job, salary=salary_job, location=location_job,
                             link=position_link, company=company_job)   # Передаем данные в item для создания структуры json

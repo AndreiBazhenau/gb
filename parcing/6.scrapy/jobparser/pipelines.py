@@ -21,7 +21,6 @@ class JobparserPipeline:                            # Класс для обра
                 s = _.replace(" ", "").replace("\xa0", "")
                 salary_list.append(s)
             item['salary'] = salary_list
-
             if item['salary'][0] == 'от':
                 item['salary_min'] = int(item['salary'][1])
 
@@ -43,10 +42,14 @@ class JobparserPipeline:                            # Класс для обра
                 item['salary_max'] = 'wrong'
             del item['salary']
 
-            item['city'] = ' '.join(item['city']).replace("  ", " ").replace(" ,", ",")
+            item['location'] = ' '.join(item['location']).replace("  ", " ").replace(" ,", ",")
             item['company'] = ' '.join(item['company']).replace("\xa0", "").replace("  ", " ").strip()
             item['site'] = 'https://hh.ru'
             item['link'] = item['link'][:item['link'].find('?')]
+
+
+        #if spider.name == 'sjru':
+
         collection.insert_one(item)  # Добавляем в базу данных
         return item
 

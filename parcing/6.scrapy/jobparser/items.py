@@ -12,7 +12,7 @@ class JobparserItem(scrapy.Item):       # Создаем структуру item
     _id = scrapy.Field()
     name = scrapy.Field()
     salary = scrapy.Field()
-    city = scrapy.Field()
+    location = scrapy.Field()
     link = scrapy.Field()
     salary_min = scrapy.Field()
     salary_max = scrapy.Field()
