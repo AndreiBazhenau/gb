@@ -12,18 +12,18 @@ class SjruSpider(scrapy.Spider):
 
     def parse(self, response: HtmlResponse):
         next_page = response.xpath('//a[@rel="next"]/@href').extract_first()
-        print(next_page)
+        vacancy_links = response.xpath('//div[@class="_3zucV _1fMKr undefined _1NAsu"]/*/*/*/*/*/*/a/@href').extract()
 
-        vacansy_links = response.xpath('//div[@class="_3zucV _1fMKr undefined _1NAsu"]/*/*/*/*/*/*/a/@href').extract()
-        # print(vacansy_links)
-        for link in vacansy_links:
-            yield response.follow(link, callback=self.vacansy_parse)
+        for link in vacancy_links:
+            yield response.follow(link, callback=self.vacancy_parse)
         yield response.follow(next_page, callback=self.parse)
 
-    def vacansy_parse(selfself, response: HtmlResponse):
+    def vacancy_parse(selfself, response: HtmlResponse):
         name_job = response.xpath('//h1/text()').extract_first()
         salary_job = response.xpath('//span[@class="_1OuF_ ZON4b"]//text()').extract()
-        # location_job = response.xpath('').extract()
+        location_job = response.xpath('//div[@class="f-test-address _3AQrx"]//text()').extract()
         position_link = response.url
-        company_job = response.xpath('//h2/text()')[2].extract()
-        yield JobparserItem(name=name_job, salary=salary_job, link=position_link, company=company_job)
+        company_job = response.xpath('//span[@class="_3mfro _1hP6a _2JVkc _2VHxz"]/text() |'
+                                     ' //h2[@class="_3mfro PlM3e _2JVkc _2VHxz _3LJqf _15msI"]/text()').extract_first()
+        yield JobparserItem(name=name_job, salary=salary_job, location=location_job,
+                            link=position_link, company=company_job)

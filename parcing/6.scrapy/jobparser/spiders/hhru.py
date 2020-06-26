@@ -17,17 +17,16 @@ class HhruSpider(scrapy.Spider):
     def parse(self, response: HtmlResponse):     # С этого метода все и начинается (в response - первый ответ)
         # Ищем ссылку для перехода на следующую страницу
         next_page = response.css('a.HH-Pager-Controls-Next.HH-Pager-Control::attr(href)').extract_first()
-        print(next_page)
         # Ищем на полученной странице ссылки на вакансии
-        vacansy_links = response.css('div.vacancy-serp div.vacancy-serp-item a.HH-LinkModifier::attr(href)').extract()
-        for link in vacansy_links:          #Перебираем ссылки
-            yield response.follow(link, callback=self.vacansy_parse)
-            # Переходим по каждой ссылке и обрабатываем ответ методом vacansy_parse
+        vacancy_links = response.css('div.vacancy-serp div.vacancy-serp-item a.HH-LinkModifier::attr(href)').extract()
+        for link in vacancy_links:          #Перебираем ссылки
+            yield response.follow(link, callback=self.vacancy_parse)
+            # Переходим по каждой ссылке и обрабатываем ответ методом vacancy_parse
 
         yield response.follow(next_page, callback=self.parse)
         # Переходим по ссылке на следующую страницу и возвращаемся к началу метода parse
 
-    def vacansy_parse(self, response: HtmlResponse):                        # Здесь обрабатываем информацию по вакансии
+    def vacancy_parse(self, response: HtmlResponse):                        # Здесь обрабатываем информацию по вакансии
         name_job = response.xpath('//h1/text()').extract_first()            # Получаем наименование вакансии
         salary_job = response.css('p.vacancy-salary span::text').extract()  # Получаем зарплату в виде списка отдельных блоков
         location_job = response.xpath('//p[@data-qa="vacancy-view-location"]//text()').extract()
