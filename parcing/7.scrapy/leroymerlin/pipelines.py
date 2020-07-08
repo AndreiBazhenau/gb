@@ -13,6 +13,10 @@ from scrapy.pipelines.images import ImagesPipeline
 class DataBasePipeline:
     def process_item(self, item, spider):
         print(1)   # Здесь реализовать добавление в БД
+        # params = params
+        item['specs_params'] = dict(zip(item['specs'], item['params']))
+        print('specs_params', item['specs_params'])
+        # loader.add_value('par', par)
         return item
 
 

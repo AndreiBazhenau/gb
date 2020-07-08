@@ -16,9 +16,18 @@ def cleaner_photo(value):       # Функция для изменения сс�
 
 
 def cleaner_price(price):
-    price = int(price[0].replace(' ', '').replace('.00', ''))
+    price = float(price[0].replace(' ', ''))
     # print('cleaner_space', type(price), price)
     return price
+
+
+def cleaner_params(params):
+    spam = []
+    for param in params:
+        p = param.strip()
+        spam.append(p)
+    # print('spam', spam)
+    return spam
 
 
 class LeroymerlinItem(scrapy.Item):
@@ -28,7 +37,12 @@ class LeroymerlinItem(scrapy.Item):
     photos = scrapy.Field(input_processor=MapCompose(cleaner_photo))  # Map в Питоне применяет функцию к каждому
     # элементу последовательности. Здесь аналогично: берётся список который прилетает на этапе парсинга
     # и обрабатывается каждый элемент списка, т.к. нет экстрактов. В скобках указываем функцию, а не
-    # выхываем т.е. без ()
+    # вызываем т.е. без ()
     # у кажого поля есть пара - инпут и отпут процессор. инпут применяется на этапе сбора,
     # аутпут процессор применяется на этапе yield
     price = scrapy.Field(output_processor=Compose(cleaner_price))
+    link = scrapy.Field()
+    specs = scrapy.Field()
+    params = scrapy.Field(output_processor=Compose(cleaner_params))
+    specs_params = scrapy.Field()
+

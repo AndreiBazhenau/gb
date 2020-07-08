@@ -43,6 +43,11 @@ class LeroymerlinruSpider(scrapy.Spider):
         loader.add_value('link', response.url)
         print(loader.load_item())
 
+        loader.add_xpath('specs', '//section//h2[text()="Характеристики"]/..//div/dt/text()')
+        print(loader.load_item())
+        loader.add_xpath('params', '//section//h2[text()="Характеристики"]/..//div/dd/text()')
+        print(loader.load_item())
+
         yield loader.load_item()  # работа через лоадер ускоряет сбор данных на 30%
 
     # вариант без лоадера
