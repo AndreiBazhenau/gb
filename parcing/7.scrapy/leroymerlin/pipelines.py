@@ -4,6 +4,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import scrapy
 from scrapy.pipelines.images import ImagesPipeline
+from pymongo import MongoClient
 
 
 # class LeroymerlinPipeline(object):
@@ -17,6 +18,12 @@ class DataBasePipeline:
         item['specs_params'] = dict(zip(item['specs'], item['params']))
         print('specs_params', item['specs_params'])
         # loader.add_value('par', par)
+
+        client = MongoClient('localhost', 27017)
+        self.mongo_base = client.leroymerlin
+        collection = self.mongo_base['leroymerlin']
+
+        collection.insert_one(item)  # Добавляем в базу данных
         return item
 
 

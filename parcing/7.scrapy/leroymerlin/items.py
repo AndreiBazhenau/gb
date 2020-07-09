@@ -26,8 +26,11 @@ def cleaner_params(params):
     for param in params:
         p = param.strip()
         spam.append(p)
-    # print('spam', spam)
     return spam
+
+
+def cleaner_link(link):
+    return link[0]
 
 
 class LeroymerlinItem(scrapy.Item):
@@ -41,7 +44,7 @@ class LeroymerlinItem(scrapy.Item):
     # у кажого поля есть пара - инпут и отпут процессор. инпут применяется на этапе сбора,
     # аутпут процессор применяется на этапе yield
     price = scrapy.Field(output_processor=Compose(cleaner_price))
-    link = scrapy.Field()
+    link = scrapy.Field(output_processor=Compose(cleaner_link))
     specs = scrapy.Field()
     params = scrapy.Field(output_processor=Compose(cleaner_params))
     specs_params = scrapy.Field()
