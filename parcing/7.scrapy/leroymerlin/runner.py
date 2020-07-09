@@ -10,7 +10,6 @@
 
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
-
 from leroymerlin.spiders.leroymerlinru import LeroymerlinruSpider
 from leroymerlin import settings
 

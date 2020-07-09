@@ -5,24 +5,18 @@
 import scrapy
 from scrapy.pipelines.images import ImagesPipeline
 from pymongo import MongoClient
+import os
+from urllib.parse import urlparse
 
-
-# class LeroymerlinPipeline(object):
-#     def process_item(self, item, spider):
-#         return item
 
 class DataBasePipeline:
     def process_item(self, item, spider):
-        print(1)   # Здесь реализовать добавление в БД
-        # params = params
         item['specs_params'] = dict(zip(item['specs'], item['params']))
-        print('specs_params', item['specs_params'])
-        # loader.add_value('par', par)
-
         client = MongoClient('localhost', 27017)
         self.mongo_base = client.leroymerlin
         collection = self.mongo_base['leroymerlin']
-
+        del item['specs']
+        del item['params']
         collection.insert_one(item)  # Добавляем в базу данных
         return item
 
@@ -39,14 +33,11 @@ class LeroymerlinPhotosPipeline(ImagesPipeline):
                 except Exception as e:
                     print(e)
 
-    # метод определяющий путь куда складывать файлы
-    # но метод не принимает item вообще. но есть meta в scrapy.Request, который можно принять здесь
-    # нужно посмотреть в документации как принимать
-    # но можно выташить url из приходящего request и например ия файла
-    # def file_path(self, request, response=None, info=None, ):
-    #     item = request.meta             #Получаем item из meta
-    #     return ''                       #Здесь необходимо вернуть путь для сохранения фотографий
-    #     Если оставить return '' то работать не булет, т.е. будет заменять request на ''
+    """ метод определяющий путь куда складывать файлы, но метод не принимает item вообще. но
+    есть meta в scrapy.Request, который можно принять здесь. Нужно посмотреть в документации как
+    принимать. Можно выташить url из приходящего request и например из файла """
+    def file_path(self, request, response=None, info=None):
+        return f"{request.meta['name']}/{os.path.basename(urlparse(request.url).path)}"
 
     def item_completed(self, results, item, info):
         if results:
