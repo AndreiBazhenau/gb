@@ -13,8 +13,8 @@ class InstagramSpider(scrapy.Spider):
     name = 'instagram'
     allowed_domains = ['instagram.com']
     start_urls = ['https://instagram.com/']
-    insta_login = 'здесь логин'
-    insta_pwd = 'Здесь зашифрованный пароль'
+    insta_login = 'insta_opt'
+    insta_pwd = '#PWD_INSTAGRAM_BROWSER:10:1594675566:AWlQAGsBrzrbrjzIZ1tbjYwlW0LqXcpKBa+Uc3nXJQPcT08gK1qxDR5qTwdVmUF4hMja/bFtZr6UT0vr+p6cR3ATeYpX86UVA7NeN2+G5aeTjioI42uhldF93K7htGeYmHMAIJCoIe8yDQ=='
     inst_login_link = 'https://www.instagram.com/accounts/login/ajax/'
     parse_user = 'ai_machine_learning'  # Пользователь, у которого собираем посты. Можно указать список
 
@@ -67,6 +67,7 @@ class InstagramSpider(scrapy.Spider):
     def user_posts_parse(self, response: HtmlResponse, username, user_id,
                          variables):  # Принимаем ответ. Не забываем про параметры от cb_kwargs
         j_data = json.loads(response.text)
+        # здесь get это не get-запрос, а метод get у словаря. идём на 4 уровня в глубину.
         page_info = j_data.get('data').get('user').get('edge_owner_to_timeline_media').get('page_info')
         if page_info.get('has_next_page'):  # Если есть следующая страница
             variables['after'] = page_info['end_cursor']  # Новый параметр для перехода на след. страницу
@@ -84,7 +85,7 @@ class InstagramSpider(scrapy.Spider):
                 user_id=user_id,
                 photo=post['node']['display_url'],
                 likes=post['node']['edge_media_preview_like']['count'],
-                post=post['node']
+                post=post['node']  # на всякий случай на будущее закидываем всю ноду в post, вдруг понадобятся все данные
             )
         yield item  # В пайплайн
 

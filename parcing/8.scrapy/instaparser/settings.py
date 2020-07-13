@@ -48,15 +48,15 @@ DOWNLOAD_DELAY = 1.25
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
+# SPIDER_MIDDLEWARES = {
 #    'instaparser.middlewares.InstaparserSpiderMiddleware': 543,
-#}
+# }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-   'instaparser.middlewares.TooManyRequestsRetryMiddleware': 543,
-}
+# DOWNLOADER_MIDDLEWARES = {
+#    'instaparser.middlewares.TooManyRequestsRetryMiddleware': 543,
+# }
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -72,6 +72,9 @@ ITEM_PIPELINES = {
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
+
+# Варьируются задержки в зависимости от скорости ответа сервера.
+# оптимально от DOWNLOAD_DELAY = 1 до AUTOTHROTTLE_MAX_DELAY = 60
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 AUTOTHROTTLE_START_DELAY = 5
