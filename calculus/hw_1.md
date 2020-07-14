@@ -36,14 +36,15 @@
 
   
   
-- $$
-  \forall x \in \mathbb{C} \nexists y \in \mathbb{C} : x > y || x < y
-  $$
+- 
+$$
+\forall x \in \mathbb{C} \nexists y \in \mathbb{C} : x > y || x < y
+$$
 
   Для любых x принадлежащих множеству комплексных чисел не существует y принадлежащий множеству комплексных чисел такой что x > y или x < y. **Ложь**
 
   
-  
+
 - $$
   \forall y \in [0; \pi/2] \exists \epsilon > 0 : sin y < sin(y + \epsilon)
   $$
