@@ -80,3 +80,12 @@
 4. {b<sub>n</sub>}<sup>∞</sup><sub>n=2</sub> = {1 \over 1-n}
 
 {n+1\over 3}
+
+\frac{1}{2} + \frac x 2 = \frac{1+x}2\
+
+^3/_7 
+
+\rfrac{3}{7}
+
+$\sfrac{1}{2}$
+
