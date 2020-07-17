@@ -103,7 +103,7 @@ class InstagramSpider(scrapy.Spider):
             yield response.follow(
                 url_followers,
                 callback=self.followers_parse,
-                cd_kwargs={'followers_name': }
+                cd_kwargs={'followers_name': followers_info}
             )
         followers = j_data.get('data').get('user').get('edge_owner_to_timeline_media').get('edges')  # Сами подписчики
         
