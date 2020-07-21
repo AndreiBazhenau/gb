@@ -27,7 +27,8 @@ class InstagramSpider(scrapy.Spider):
     insta_pwd = '#PWD_INSTAGRAM_BROWSER:10:1594675566:AWlQAGsBrzrbrjzIZ1tbjYwlW0LqXcpKBa+Uc3nXJQPcT08gK1qx' \
                 'DR5qTwdVmUF4hMja/bFtZr6UT0vr+p6cR3ATeYpX86UVA7NeN2+G5aeTjioI42uhldF93K7htGeYmHMAIJCoIe8yDQ=='
     inst_login_link = 'https://www.instagram.com/accounts/login/ajax/'
-    parse_user = 'kmemescluster'  # Пользователь, у которого собираем посты. Можно указать список
+    # parse_user = 'kmemescluster'  # Пользователь, у которого собираем посты. Можно указать список
+    parse_users = ['nine.three.photography', 'photochu']  # Пользователи, у которых собираем follower/following
 
     graphql_url = 'https://www.instagram.com/graphql/query/?'
     posts_hash = 'eddbde960fed6bde675388aac39a3657'  # hash для получения данных о постах с главной страницы
@@ -47,17 +48,17 @@ class InstagramSpider(scrapy.Spider):
     def user_parse(self, response: HtmlResponse):
         j_body = json.loads(response.text)  # Преобразуем респонс в джейсон
         if j_body['authenticated']:  # Проверяем ответ после авторизации, чтобы понять удачно ли прошла авторизация
-            yield response.follow(
-                # переходим на желаемую страницу пользователя. Сделать цикл для кол-ва пользователей больше 2-ух
-                f'/{self.parse_user}',
-                # т.к. скрапи прекрасно работает с относительными ссылками - этого достаточно для перехода
-                callback=self.user_data_parse,  # след. шаг
-                cb_kwargs={'username': self.parse_user}
+            for parse_user in self.parse_users:     # Перебираем аккаунты пользователей
+                yield response.follow(
+                    # т.к. скрапи прекрасно работает с относительными ссылками - этого достаточно для перехода
+                    f'/{parse_user}',
+                    callback=self.user_data_parse,  # след. шаг
+                    cb_kwargs={'username': parse_user}
+                )
                 # можем передавать любые значения. Это важно передавать именно так, а не брать из общего
                 # глобального списка потому что мы можем перебирать это в цикле и у вас будут лететь айтемы
                 # в абсолютно неопределённом порядке потому что асинхронно, поэтому надо передавать явно.
                 # Поэтому мы передаём этот username в следующий метод user_data_parse явно
-            )
 
     # принимаем username из предыдущего метода user_parse и
     # на руках будет иметь имя пользователя с которым работаем в данном методе
@@ -123,7 +124,7 @@ class InstagramSpider(scrapy.Spider):
             yield response.follow(
                 url_followers,
                 callback=self.followers_parse,
-                cd_kwargs={'username': username,
+                cb_kwargs={'username': username,
                            'user_id': user_id,
                            'variables': deepcopy(variables)
                            }
@@ -131,10 +132,11 @@ class InstagramSpider(scrapy.Spider):
         followers = j_data.get('data').get('user').get('edge_followed_by').get('edges')  # Сами подписчики
         for follower in followers:
             item = InstaparserItem(
-                user_id=follower['node']['id'],
-                username=follower['node']['username'],
+                username=username,
+                follower_id=follower['node']['id'],
+                username_follower=follower['node']['username'],
                 full_name=follower['node']['full_name'],
-                user_photo=follower['node']['profile_pic_url'],
+                photo=follower['node']['profile_pic_url'],
                 user_attribute='follower',
                 full_info=follower['node'])
         yield item
@@ -153,22 +155,20 @@ class InstagramSpider(scrapy.Spider):
             yield response.follow(
                 url_following,
                 callback=self.following_parse,
-                cd_kwargs={'username': username,
+                cb_kwargs={'username': username,
                            'user_id': user_id,
                            'variables': deepcopy(variables)})
         followings = j_data.get('data').get('user').get('edge_follow').get('edges')  # Сами подписчики
         for following in followings:
             item = InstaparserItem(
-                user_id=following['node']['id'],
-                username=following['node']['username'],
+                username=username,
+                following_id=following['node']['id'],
+                username_following=following['node']['username'],
                 full_name=following['node']['full_name'],
-                user_photo=following['node']['profile_pic_url'],
+                photo=following['node']['profile_pic_url'],
                 user_attribute='following',
                 full_info=following['node'])
         yield item
-
-
-
 
     # Получаем токен для авторизации
     def fetch_csrf_token(self, text):

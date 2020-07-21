@@ -6,9 +6,11 @@ from urllib.parse import urlparse
 
 
 class InstaparserPipeline:
-    def process_item(self, item, spider):
+    def __init__(self):
         client = MongoClient('localhost', 27017)
         self.mongo_base = client.instagram
+
+    def process_item(self, item, spider):
         collection = self.mongo_base['instagram']
         collection.insert_one(item)  # Добавляем в базу данных
         print('Added to DB')
