@@ -71,14 +71,14 @@ class InstagramSpider(scrapy.Spider):
         url_following = f'{self.graphql_url}query_hash={self.following_hash}&{urlencode(variables)}'
         yield response.follow(
             url_followers,
-            callback=self.user_followers_parse,
+            callback=self.followers_parse,
             cb_kwargs={'username': username,
                        'user_id': user_id,
                        'variables': deepcopy(variables)})  # variables ч/з deepcopy во избежание гонок
 
         yield response.follow(
             url_following,
-            callback=self.user_following_parse,
+            callback=self.following_parse,
             cb_kwargs={'username': username,
                        'user_id': user_id,
                        'variables': deepcopy(variables)})  # variables ч/з deepcopy во избежание гонок
@@ -113,7 +113,7 @@ class InstagramSpider(scrapy.Spider):
     def followers_parse(self, response: HtmlResponse, username, user_id, variables):
         j_data = json.loads(response.text)
         #page_info = j_data.get('data').get('user').ger('edge_followed_by').get('page_info')
-        followers_info = j_data.get('data').get('user').get('edge_follower_by').get('page_info')  # метод get словаря
+        followers_info = j_data.get('data').get('user').get('edge_followed_by').get('page_info')  # метод get словаря
         print("followers_info =", followers_info)
         if followers_info.get('has_next_page'): # Если есть следующая страница
             variables['after'] = followers_info['end_cursor']  # Новый параметр для перехода на след. страницу
@@ -139,35 +139,35 @@ class InstagramSpider(scrapy.Spider):
                 full_info=follower['node'])
         yield item
 
-        # собираем тех на кого подписан пользователь
-        def following_parse(self, response: HtmlResponse, username, user_id, variables):
-            j_data = json.loads(response.text)
-            # page_info = j_data.get('data').get('user').ger('edge_followed_by').get('page_info')
-            following_info = j_data.get('data').get('user').get('edge_followштп_by').get('page_info')  # метод get словаря
-            print("following_info =", following_info)
-            if following_info.get('has_next_page'):  # Если есть следующая страница
-                variables['after'] = following_info['end_cursor']  # Новый параметр для перехода на след. страницу
-                print("variables['after'] =", variables['after'])
-                url_following = f'{self.graphql_url}query_hash={self.following_hash}&{urlencode(variables)}'
-                print("url_following =", url_following)
-                yield response.follow(
-                    url_following,
-                    callback=self.following_parse,
-                    cd_kwargs={'username': username,
-                               'user_id': user_id,
-                               'variables': deepcopy(variables)
-                               }
-                )
-            followers = j_data.get('data').get('user').get('edge_followed_by').get('edges')  # Сами подписчики
-            for follower in followers:
-                item = InstaparserItem(
-                    user_id=follower['node']['id'],
-                    username=follower['node']['username'],
-                    full_name=follower['node']['full_name'],
-                    user_photo=follower['node']['profile_pic_url'],
-                    user_attribute='follower',
-                    full_info=follower['node'])
-            yield item
+    # собираем тех, на кого подписан пользователь
+    def following_parse(self, response: HtmlResponse, username, user_id, variables):
+        j_data = json.loads(response.text)
+        # page_info = j_data.get('data').get('user').ger('edge_followed_by').get('page_info')
+        following_info = j_data.get('data').get('user').get('edge_follow').get('page_info')  # метод get словаря
+        print("following_info =", following_info)
+        if following_info.get('has_next_page'):  # Если есть следующая страница
+            variables['after'] = following_info['end_cursor']  # Новый параметр для перехода на след. страницу
+            print("variables['after'] =", variables['after'])
+            url_following = f'{self.graphql_url}query_hash={self.following_hash}&{urlencode(variables)}'
+            print("url_following =", url_following)
+            yield response.follow(
+                url_following,
+                callback=self.following_parse,
+                cd_kwargs={'username': username,
+                           'user_id': user_id,
+                           'variables': deepcopy(variables)})
+        followings = j_data.get('data').get('user').get('edge_follow').get('edges')  # Сами подписчики
+        for following in followings:
+            item = InstaparserItem(
+                user_id=following['node']['id'],
+                username=following['node']['username'],
+                full_name=following['node']['full_name'],
+                user_photo=following['node']['profile_pic_url'],
+                user_attribute='following',
+                full_info=following['node'])
+        yield item
+
+
 
 
     # Получаем токен для авторизации
