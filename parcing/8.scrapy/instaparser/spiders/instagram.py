@@ -23,9 +23,8 @@ class InstagramSpider(scrapy.Spider):
     name = 'instagram'
     allowed_domains = ['instagram.com']
     start_urls = ['https://instagram.com/']
-    insta_login = 'insta_opt'
-    insta_pwd = '#PWD_INSTAGRAM_BROWSER:10:1594675566:AWlQAGsBrzrbrjzIZ1tbjYwlW0LqXcpKBa+Uc3nXJQPcT08gK1qx' \
-                'DR5qTwdVmUF4hMja/bFtZr6UT0vr+p6cR3ATeYpX86UVA7NeN2+G5aeTjioI42uhldF93K7htGeYmHMAIJCoIe8yDQ=='
+    insta_login = '***'
+    insta_pwd = '***'
     inst_login_link = 'https://www.instagram.com/accounts/login/ajax/'
     # parse_user = 'kmemescluster'  # Пользователь, у которого собираем посты. Можно указать список
     parse_users = ['nine.three.photography', 'photochu']  # Пользователи, у которых собираем follower/following
