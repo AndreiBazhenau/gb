@@ -1,8 +1,4 @@
-import scrapy
-from scrapy.pipelines.images import ImagesPipeline
 from pymongo import MongoClient
-import os
-from urllib.parse import urlparse
 
 
 class InstaparserPipeline:
