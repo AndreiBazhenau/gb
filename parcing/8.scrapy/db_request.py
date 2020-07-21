@@ -9,10 +9,10 @@ db = client['instagram']
 
 follow = db.follow
 
-for follow in follow.find({'username':'photochu', 'user_attribute':'following'}, {'username_following': 1}):
-    print(follow)
+for follow in follow.find({'username': 'photochu', 'user_attribute': 'follower'}, {'username_follower': 1}):
+    pprint(follow)
 
 print('*' * 30)
 
-for follow in follow.find({'username': 'nine.three.photography', 'follower_id': None}, {'username_following':1}):
+for follow in follow.find({'username': 'nine.three.photography', 'user_attribute': 'following'}, {'username_following': 1}):
     pprint(follow)
