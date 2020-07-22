@@ -7,12 +7,11 @@ from pprint import pprint
 client = MongoClient('localhost', 27017)
 db = client['instagram']
 
-follow = db.follow
+follows = db.follows
 
-for follow in follow.find({'username': 'photochu', 'user_attribute': 'follower'}, {'username_follower': 1}):
+print('Followers:')
+for follow in follows.find({'username': 'photochu', 'user_attribute': 'follower'}, {'username_follower': 1}):
     pprint(follow)
-
-print('*' * 30)
-
-for follow in follow.find({'username': 'nine.three.photography', 'user_attribute': 'following'}, {'username_following': 1}):
+print('Followings:')
+for follow in follows.find({'username': 'nine.three.photography', 'user_attribute': 'following'}, {'username_following':1}):
     pprint(follow)
