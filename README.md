@@ -4,24 +4,24 @@ This repository contains projects which were created during GeekBrains courses i
 
 FOLDERS:
 
-1. python - Python course
-2. algorithms - algorithms course
-3. sql - Database course: SQL, NoSQL: MongoDB, Redis
-4. ds_libs - Python libraries for Data Science: Numpy, Pandas, Matplotlib, Scikit-learn
-5. html_css - html & css course
-6. math - Mathematics course
-7. parcing - Methods of parcing and scraping of information
-8. calculus - Elementary mathematical analysis
+- **python** - Python course
+- **algorithms** - algorithms course
+- **sql** - Database course: SQL, NoSQL: MongoDB, Redis
+- **ds_libs** - Python libraries for Data Science: Numpy, Pandas, Matplotlib, Scikit-learn
+- **html_css** - html & css course
+- **math** - Mathematics course
+- **parcing** - Methods of parcing and scraping of information
+- **calculus** - Elementary mathematical analysis
 
 ---------------------------------------
 
 По русски:
 
-1. python - курс по Питону
-2. algorithms - курс по алгоритмам
-3. sql - курс по базам данных: SQL, NoSQL: MongoDB, Redis
-4. ds_libs - библиотеки для машинного обучения: Numpy, Pandas, Matplotlib, Scikit-learn
-5. html_css - курс по html & css
-6. math - курс по высшей математике
-7. parcing - проекты по сбору и обработке данных  
-8. calculus - математический анализ: дифференциальное и интегральное исчисление
+- **python** - курс по Питону
+- **algorithms** - курс по алгоритмам
+- **sql** - курс по базам данных: SQL, NoSQL: MongoDB, Redis
+- **ds_libs** - библиотеки для машинного обучения: Numpy, Pandas, Matplotlib, Scikit-learn
+- **html_css** - курс по html & css
+- **math** - курс по высшей математике
+- **parcing** - проекты по сбору и обработке данных  
+- **calculus** - математический анализ: дифференциальное и интегральное исчисление
