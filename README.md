@@ -12,6 +12,7 @@ FOLDERS:
 - **math** - Mathematics course
 - **parcing** - Methods of parcing and scraping of information
 - **calculus** - Elementary mathematical analysis
+- **probability_statistics** - Course of Probability Theory & Statistics
 
 ---------------------------------------
 
@@ -25,3 +26,4 @@ FOLDERS:
 - **math** - курс по высшей математике
 - **parcing** - проекты по сбору и обработке данных  
 - **calculus** - математический анализ: дифференциальное и интегральное исчисление
+- **probability_statistics** - курс по теории вероятности и статистике
