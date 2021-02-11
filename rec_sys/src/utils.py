@@ -1,8 +1,8 @@
-def prefilter_items(data_train):
+def prefilter_items(data_train, take_n_popular=5000):
     # Оставим только 5000 самых популярных товаров
     popularity = data_train.groupby('item_id')['quantity'].sum().reset_index()
     popularity.rename(columns={'quantity': 'n_sold'}, inplace=True)
-    top_5000 = popularity.sort_values('n_sold', ascending=False).head(5000).item_id.tolist()
+    top_5000 = popularity.sort_values('n_sold', ascending=False).head(take_n_popular).item_id.tolist()
     #добавим, чтобы не потерять юзеров
     data_train.loc[~data_train['item_id'].isin(top_5000), 'item_id'] = 999999 
     
@@ -23,5 +23,3 @@ def prefilter_items(data_train):
     # ...
     
     return data_train
-def postfilter_items():
-    pass
