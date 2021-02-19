@@ -149,3 +149,33 @@ class MainRecommender:
         self._update_dict(user_id=user)
         return self._get_recommendations(user, model=self.own_recommender, N=N)
 
+
+    def get_similar_items_recommendation(self, user, N=5):
+        """Рекомендуем товары, похожие на топ-N купленных юзером товаров"""
+
+        top_users_purchases = self.top_purchases[self.top_purchases['user_id'] == user].head(N)
+
+        res = top_users_purchases['item_id'].apply(lambda x: self._get_similar_item(x)).tolist()
+        res = self._extend_with_top_popular(res, N=N)
+
+        assert len(res) == N, 'Количество рекомендаций != {}'.format(N)
+        return res
+
+
+    def get_similar_users_recommendation(self, user, N=5):
+        """Рекомендуем топ-N товаров, среди купленных похожими юзерами"""
+
+        res = []
+
+        # Находим топ-N похожих пользователей
+        similar_users = self.model.similar_users(self.userid_to_id[user], N=N+1)
+        similar_users = [rec[0] for rec in similar_users]
+        similar_users = similar_users[1:]   # удалим юзера из запроса
+
+        for user in similar_users:
+            res.extend(self.get_own_recommendations(user, N=1))
+
+        res = self._extend_with_top_popular(res, N=N)
+
+        assert len(res) == N, 'Количество рекомендаций != {}'.format(N)
+        return res
