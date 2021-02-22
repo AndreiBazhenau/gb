@@ -9,6 +9,17 @@ from implicit.als import AlternatingLeastSquares
 from implicit.nearest_neighbours import ItemItemRecommender  # нужен для одного трюка
 from implicit.nearest_neighbours import bm25_weight, tfidf_weight
 
+import pandas as pd
+import numpy as np
+
+# Для работы с матрицами
+from scipy.sparse import csr_matrix
+
+# Матричная факторизация
+from implicit.als import AlternatingLeastSquares
+from implicit.nearest_neighbours import ItemItemRecommender  # нужен для одного трюка
+from implicit.nearest_neighbours import bm25_weight, tfidf_weight
+
 
 class MainRecommender:
     """Рекоммендации, которые можно получить из ALS
@@ -20,7 +31,7 @@ class MainRecommender:
     """
 
     def __init__(self, data, weighting=True):
-
+        
         # Топ покупок каждого юзера
         self.top_purchases = data.groupby(['user_id', 'item_id'])['quantity'].count().reset_index()
         self.top_purchases.sort_values('quantity', ascending=False, inplace=True)
@@ -90,7 +101,8 @@ class MainRecommender:
         model = AlternatingLeastSquares(factors=n_factors,
                                         regularization=regularization,
                                         iterations=iterations,
-                                        num_threads=num_threads)
+                                        num_threads=num_threads,
+                                        random_state=0)
         model.fit(csr_matrix(user_item_matrix).T.tocsr())
 
         return model
@@ -123,14 +135,17 @@ class MainRecommender:
 
     def _get_recommendations(self, user, model, N=5):
         """Рекомендации через стардартные библиотеки implicit"""
-
+        
         self._update_dict(user_id=user)
-        res = [self.id_to_itemid[rec[0]] for rec in model.recommend(userid=self.userid_to_id[user],
+        
+        recs = model.recommend(userid=self.userid_to_id[user],
                                         user_items=csr_matrix(self.user_item_matrix).tocsr(),
                                         N=N,
                                         filter_already_liked_items=False,
                                         filter_items=[self.itemid_to_id[999999]],
-                                        recalculate_user=True)]
+                                        recalculate_user=True)
+        
+        res = [self.id_to_itemid[rec[0]] for rec in recs]
 
         res = self._extend_with_top_popular(res, N=N)
 
@@ -149,7 +164,6 @@ class MainRecommender:
         self._update_dict(user_id=user)
         return self._get_recommendations(user, model=self.own_recommender, N=N)
 
-
     def get_similar_items_recommendation(self, user, N=5):
         """Рекомендуем товары, похожие на топ-N купленных юзером товаров"""
 
@@ -161,19 +175,20 @@ class MainRecommender:
         assert len(res) == N, 'Количество рекомендаций != {}'.format(N)
         return res
 
-
     def get_similar_users_recommendation(self, user, N=5):
         """Рекомендуем топ-N товаров, среди купленных похожими юзерами"""
 
         res = []
-
+        
         # Находим топ-N похожих пользователей
         similar_users = self.model.similar_users(self.userid_to_id[user], N=N+1)
         similar_users = [rec[0] for rec in similar_users]
         similar_users = similar_users[1:]   # удалим юзера из запроса
 
+        #!!! Здесь была ошибка!
         for user in similar_users:
-            res.extend(self.get_own_recommendations(user, N=1))
+            userid = self.id_to_userid[user] #own recommender works with user_ids
+            res.extend(self.get_own_recommendations(userid, N=1))
 
         res = self._extend_with_top_popular(res, N=N)
 
