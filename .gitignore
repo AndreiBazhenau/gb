@@ -174,3 +174,8 @@ fabric.properties
 
 #CatBoost
 catboost_info/
+.catboost_info
+*.catboost_info
+*/.catboost_info
+*/*/.catboost_info
+*/catboost_info/*
