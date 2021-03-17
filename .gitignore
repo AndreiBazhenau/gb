@@ -173,4 +173,4 @@ crashlytics-build.properties
 fabric.properties
 
 #CatBoost
-/catboost_info/
+catboost_info/
