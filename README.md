@@ -1,6 +1,6 @@
 # GeekBrains projects
 
-This repository contains projects, homework and course projects which were created during GeekBrains courses in Data Science faculty.
+This repository contains lessons, homework and course projects which were created during GeekBrains courses in Data Science faculty.
 
 FOLDERS:
 
