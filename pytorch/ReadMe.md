@@ -42,6 +42,7 @@
 - Сохранение и загрузка модели
 - Tensorflow vs PyTorch: различия
 - Где полученные знания можно применить
+- **hw_1.ipynb** - настройка PyTorch модели (изменение слоёв, количества, метода оптимизации, обучение на батче) на датасете CIFAR10.
 
 [Урок 2 CNN. Детектирование](https://gb.ru/lessons/134923) - Object Detector
 
@@ -75,7 +76,8 @@
     - Нормализация данных
     - Аугментация данных
       - Модуль transforms
-- **lesson_2_gb-road-sign-detection-pytorch.ipynb** - практика
+- **lesson_2_gb-road-sign-detection-pytorch.ipynb** - определение на картинке дорожного знака, ограничивающую рамку вокруг знака и типа дорожного знака (многоклассовая классификация) на датасете Kaggle https://www.kaggle.com/julichitai/gb-road-sign-detection-pytorch
+- **hw_2.ipynb** - обучение распознавание котов и собак на датасете Kaggle https://www.kaggle.com/andrewmvd/dog-and-cat-detection с аугментацией.
 
 [Урок 3 Сегментация изображений](https://gb.ru/lessons/134924)
 
@@ -130,8 +132,29 @@
 
   y = sin(x)/x - x/10. График функции задаётся в датафрейме.
 
+[Урок 5 LSTM](https://gb.ru/lessons/134926) - Долгая краткосрочная память
 
-[Урок 5 LSTM](https://gb.ru/lessons/134926)
+- **lesson_5.ipynb** - предсказание действий человека: что он будет делать в следующий временной промежуток. CV и NLP - получаем точки позы человека, а потом работаем с последовательностью. Точки снимаются библиотекой OpenPifPaf. Датасет "NTU RGB+D" Action Recognition Dataset https://github.com/shahroudy/NTURGB-D
+- **hw_5.ipynb** - предсказание движений человека.
+  - **Дополнительные материалы**:
+    1. [Статья с которой все началось (2017)](https://arxiv.org/abs/1706.03762) 
+    2. [Реализация модели из статьи выше на pytorch](https://www.youtube.com/watch?v=U0s0f995w14) 
+    3. [Короткое видео где все лаконично объясняется](https://www.youtube.com/watch?v=TQQlZhbC5ps) 
+    4. [Видео подлиннее](https://www.youtube.com/watch?v=S27pHKBEp30) 
+    5. [Статья на русском и на tf](https://www.tensorflow.org/text/tutorials/transformer) 
+    6. [Статья модели улучшенного трансформера (2018)](https://arxiv.org/abs/1808.03867)  
+    7. [Статья-вики](https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80_(%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F)) 
+    8. [Библиотека для pytorch](https://huggingface.co/transformers/) 
+    9. [Пример применения трансформера в качестве классификатора](https://github.com/lucidrains/vit-pytorch)
+    10. [Прикладное машинное обучение 4. Self-Attention. Transformer overview](https://youtu.be/UETKUIlYE6g)
+    11. [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
+    12. [Machine Learning Toolkits - Awesome ML Resources](https://www.kaggle.com/arunkumarramanan/machine-learning-toolkits-awesome-ml-resources)
 
-- 
 
+
+**Для дальнейшего развития в МЛ**:
+
+1. Репозиторий с проектами по МЛ https://github.com/veb-101/Data-Science-Projects
+2. Статья с проектами по МЛ https://vc.ru/ml/79368-primenenie-mashinnogo-obucheniya-i-data-science-v-promyshlennosti
+3. Онлайн-книга для подготовки к собеседованию по МЛ https://huyenchip.com/ml-interviews-book/
+4. Как обучаются трансформеры: https://jalammar.github.io/illustrated-transformer/
