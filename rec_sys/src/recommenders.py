@@ -70,7 +70,6 @@ class MainRecommender:
     @staticmethod
     def _prepare_dicts(user_item_matrix):
         """Подготавливает вспомогательные словари"""
-
         userids = user_item_matrix.index.values
         itemids = user_item_matrix.columns.values
 
@@ -88,7 +87,6 @@ class MainRecommender:
     @staticmethod
     def fit_own_recommender(user_item_matrix):
         """Обучает модель, которая рекомендует товары, среди товаров, купленных юзером"""
-
         own_recommender = ItemItemRecommender(K=1, num_threads=4)
         own_recommender.fit(csr_matrix(user_item_matrix).T.tocsr())
 
@@ -97,7 +95,6 @@ class MainRecommender:
     @staticmethod
     def fit(user_item_matrix, n_factors=20, regularization=0.001, iterations=15, num_threads=4):
         """Обучает ALS"""
-
         model = AlternatingLeastSquares(factors=n_factors,
                                         regularization=regularization,
                                         iterations=iterations,
@@ -109,7 +106,6 @@ class MainRecommender:
 
     def _update_dict(self, user_id):
         """Если появился новыю user / item, то нужно обновить словари"""
-
         if user_id not in self.userid_to_id.keys():
 
             max_id = max(list(self.userid_to_id.values()))
@@ -126,7 +122,6 @@ class MainRecommender:
 
     def _extend_with_top_popular(self, recommendations, N=5):
         """Если кол-во рекоммендаций < N, то дополняем их топ-популярными"""
-
         if len(recommendations) < N:
             recommendations.extend(self.overall_top_purchases[:N])
             recommendations = recommendations[:N]
@@ -135,7 +130,6 @@ class MainRecommender:
 
     def _get_recommendations(self, user, model, N=5):
         """Рекомендации через стардартные библиотеки implicit"""
-        
         self._update_dict(user_id=user)
         
         recs = model.recommend(userid=self.userid_to_id[user],
@@ -154,19 +148,16 @@ class MainRecommender:
 
     def get_als_recommendations(self, user, N=5):
         """Рекомендации через стандартные библиотеки implicit"""
-
         self._update_dict(user_id=user)
         return self._get_recommendations(user, model=self.model, N=N)
 
     def get_own_recommendations(self, user, N=5):
         """Рекомендуем товары среди тех, которые юзер уже купил"""
-
         self._update_dict(user_id=user)
         return self._get_recommendations(user, model=self.own_recommender, N=N)
 
     def get_similar_items_recommendation(self, user, N=5):
         """Рекомендуем товары, похожие на топ-N купленных юзером товаров"""
-
         top_users_purchases = self.top_purchases[self.top_purchases['user_id'] == user].head(N)
 
         res = top_users_purchases['item_id'].apply(lambda x: self._get_similar_item(x)).tolist()
@@ -177,7 +168,6 @@ class MainRecommender:
 
     def get_similar_users_recommendation(self, user, N=5):
         """Рекомендуем топ-N товаров, среди купленных похожими юзерами"""
-
         res = []
         
         # Находим топ-N похожих пользователей

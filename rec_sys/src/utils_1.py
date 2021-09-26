@@ -36,7 +36,6 @@ def get_rec(model, x, itemid_to_id, id_to_itemid):
 
 def get_recommendations(user, model, sparse_user_item, itemid_to_id, id_to_itemid, userid_to_id, N=5):
     """Рекомендуем топ-N товаров"""
-    
     res = [id_to_itemid[rec[0]] for rec in 
                     model.recommend(userid=userid_to_id[user], 
                                     user_items=sparse_user_item,   # на вход user-item matrix
@@ -49,7 +48,6 @@ def get_recommendations(user, model, sparse_user_item, itemid_to_id, id_to_itemi
 
 def get_similar_items_recommendation(data, user, model, itemid_to_id, id_to_itemid, N=5):
     """Рекомендуем товары, похожие на топ-N купленных юзером товаров"""
-    
     popularity= data[data['user_id']==user]
     popularity = popularity.groupby(['item_id'])['quantity'].count().reset_index()
     popularity.sort_values('quantity', ascending=False, inplace=True)
@@ -61,7 +59,6 @@ def get_similar_items_recommendation(data, user, model, itemid_to_id, id_to_item
 
 def get_similar_users_recommendation(user, model, user_item_matrix, itemid_to_id, id_to_itemid, userid_to_id, N=5):
     """Рекомендуем топ-N товаров, среди купленных похожими юзерами"""
-    
     similar_users = model.similar_users(userid_to_id[user], N+1)
     
     own = ItemItemRecommender(K=1, num_threads=4) # K - кол-во билжайших соседей
