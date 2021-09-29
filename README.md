@@ -1,4 +1,4 @@
-# Projects to learn Data Science, python, machine learning etc.
+# Projects to learn Python, Data Science, Machine Learning, Neural Networks etc.
 
 The repository contains lessons, homework and course projects that were done during Udemy, Coursera and GeekBrains courses.
 
@@ -7,12 +7,8 @@ The repository contains lessons, homework and course projects that were done dur
 ### Udemy
 - **[python_bootcamp](https://github.com/alex-kalinichenko/gb/tree/master/python_bootcamp)** - Python Programming Bootcamp - Sep-Nov 2019 - [certificate](https://www.udemy.com/certificate/UC-TE7ZSUF3/)
 
-
-
 ### Coursera
 - **Machine Learning** from Andrew Ng by Stanford - Nov-Dec 2019 - [certificate](https://www.coursera.org/account/accomplishments/verify/FWKB22H26CTH)
-
-
 
 ### GeekBrains courses ([Data Science faculty](https://gb.ru/geek_university/data-science)):
 
