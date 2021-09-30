@@ -18,7 +18,7 @@ The repository contains lessons, homework and course projects that were done dur
 - **[linux](https://github.com/alex-kalinichenko/gb/tree/master/linux)** - Linux for Data Science faculty - Feb 2020 - [certificate](https://gb.ru/certificates/721032.en)
 - **[algorithms](https://github.com/alex-kalinichenko/gb/tree/master/algorithms) -** Algorithms and data structures in Python - March 2020 - [certificate](https://gb.ru/certificates/731309.en)
 - **[sql](https://github.com/alex-kalinichenko/gb/tree/master/sql)** - Database course: SQL, NoSQL: MongoDB, Redis - March 2020 - [certificate](https://gb.ru/certificates/754677.en)
-- **[ds_libs](https://github.com/alex-kalinichenko/gb/tree/master/ds_libs)** - Python libraries for Data Science Part 1: Numpy, Pandas, Matplotlib, Scikit-learn - May 2020 - [certificate](https://gb.ru/certificates/849153.en)
+- **[ds_libs](https://github.com/alex-kalinichenko/gb/tree/master/ds_libs)** - Python libraries for Data Science. Part 1: Numpy, Pandas, Matplotlib, Scikit-learn - May 2020 - [certificate](https://gb.ru/certificates/849153.en)
 - **[html_css](https://github.com/alex-kalinichenko/gb/tree/master/html_css)** - HTML & CSS - June 2020 - [certificate](https://gb.ru/certificates/873800.en)
 - **[math](https://github.com/alex-kalinichenko/gb/tree/master/math)** - Mathematics course - June 2020 - [certificate](https://gb.ru/certificates/892319.en)
 - **[parsing](https://github.com/alex-kalinichenko/gb/tree/master/parsing)** - Methods of parsing, scraping and processing data - June 2020 - [certificate](https://gb.ru/certificates/892323.en)
@@ -33,7 +33,7 @@ The repository contains lessons, homework and course projects that were done dur
 - **[neural_networks](https://github.com/alex-kalinichenko/gb/tree/master/neural_networks)** - Introduction to Neural Networks, TensorFlow & Keras - June 2020 - [certificate](https://gb.ru/certificates/1270190.en)
 - **[pytorch](https://github.com/alex-kalinichenko/gb/tree/master/pytorch)** - PyTorch framework - July 2021 - [certificate](https://gb.ru/certificates/1315506.en)
 - **[nlp](https://github.com/alex-kalinichenko/gb/tree/master/nlp)** - Natural Language Processing - August 2020 - [certificate](https://gb.ru/certificates/1373004.en)
-- **[deep_learning_cv](https://github.com/alex-kalinichenko/gb/tree/master/deep_learning_cv)** - Deep Learning in Computer Vision - September 2021 - [certificate]()
+- **[deep_learning_cv](https://github.com/alex-kalinichenko/gb/tree/master/deep_learning_cv)** - Deep Learning in Computer Vision - September 2021 - [certificate](https://gb.ru/certificates/1408031.en)
 
 ---------------------------------------
 
