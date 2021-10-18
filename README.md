@@ -10,7 +10,7 @@ The repository contains lessons, homework and course projects that were done dur
 ### Coursera
 - **Machine Learning** from Andrew Ng by Stanford - Nov-Dec 2019 - [certificate](https://www.coursera.org/account/accomplishments/verify/FWKB22H26CTH)
 
-### GeekBrains courses ([Data Science faculty](https://gb.ru/geek_university/data-science)):
+### GeekBrains - [Data Science faculty](https://gb.ru/geek_university/data-science)
 
 - **git** - December 2019 - [certificate](https://gb.ru/certificates/687549.en)
 - **[python_basics](https://github.com/alex-kalinichenko/gb/tree/master/python_basics)** - Python. Basics - Dec 2019 - [certificate](https://gb.ru/certificates/687067.en)
