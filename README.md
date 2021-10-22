@@ -34,7 +34,7 @@ The repository contains lessons, homework and course projects that were done dur
 - **[pytorch](https://github.com/alex-kalinichenko/gb/tree/master/pytorch)** - PyTorch framework - July 2021 - [certificate](https://gb.ru/certificates/1315506.en)
 - **[nlp](https://github.com/alex-kalinichenko/gb/tree/master/nlp)** - Natural Language Processing - August 2020 - [certificate](https://gb.ru/certificates/1373004.en)
 - **[deep_learning_cv](https://github.com/alex-kalinichenko/gb/tree/master/deep_learning_cv)** - Deep Learning in Computer Vision - September 2021 - [certificate](https://gb.ru/certificates/1408031.en)
-- **[megafon](https://github.com/alex-kalinichenko/gb/tree/master/megafon)** - Data Science course from Megafon company with dataset from mobile operator
+- **[megafon](https://github.com/alex-kalinichenko/gb/tree/master/megafon)** - Data Science course from Megafon company with dataset from mobile operator - October 2021
 
  
 
