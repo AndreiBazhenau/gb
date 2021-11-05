@@ -1,6 +1,6 @@
 # Projects to learn Python, Data Science, Machine Learning, Neural Networks etc.
 
-The repository contains lessons, homework and course projects that were done during Udemy, Coursera and GeekBrains courses.
+The repository contains lessons, homework and course projects that were done during Udemy, Coursera and GeekBrains postgraduate education.
 
 ------------------------------------
 
@@ -10,7 +10,7 @@ The repository contains lessons, homework and course projects that were done dur
 ### Coursera
 - **Machine Learning** from Andrew Ng by Stanford - Nov-Dec 2019 - [certificate](https://www.coursera.org/account/accomplishments/verify/FWKB22H26CTH)
 
-### GeekBrains - [Data Science faculty](https://gb.ru/geek_university/data-science)
+### Postgraduate Diploma - GeekBrains - [Data Science & AI faculty](https://gb.ru/geek_university/data-science)
 
 - **git** - December 2019 - [certificate](https://gb.ru/certificates/687549.en)
 - **[python_basics](https://github.com/alex-kalinichenko/gb/tree/master/python_basics)** - Python. Basics - Dec 2019 - [certificate](https://gb.ru/certificates/687067.en)
@@ -32,9 +32,11 @@ The repository contains lessons, homework and course projects that were done dur
 - **[kaggle](https://github.com/alex-kalinichenko/gb/tree/master/kaggle)** - Kaggle competitions  & EDA - April 2020 - [certificate](https://gb.ru/certificates/1230898.en)
 - **[neural_networks](https://github.com/alex-kalinichenko/gb/tree/master/neural_networks)** - Introduction to Neural Networks, TensorFlow & Keras - June 2020 - [certificate](https://gb.ru/certificates/1270190.en)
 - **[pytorch](https://github.com/alex-kalinichenko/gb/tree/master/pytorch)** - PyTorch framework - July 2021 - [certificate](https://gb.ru/certificates/1315506.en)
-- **[nlp](https://github.com/alex-kalinichenko/gb/tree/master/nlp)** - Natural Language Processing - August 2020 - [certificate](https://gb.ru/certificates/1373004.en)
+- **[nlp](https://github.com/alex-kalinichenko/gb/tree/master/nlp)** - Natural Language Processing - August 2021 - [certificate](https://gb.ru/certificates/1373004.en)
+- **[nlp course project](https://github.com/alex-kalinichenko/gb/tree/master/nlp/course_project)** - In the course project, a telegram chat bot was created to classify messages as spam / not spam - August 2021
 - **[deep_learning_cv](https://github.com/alex-kalinichenko/gb/tree/master/deep_learning_cv)** - Deep Learning in Computer Vision - September 2021 - [certificate](https://gb.ru/certificates/1408031.en)
-- **[megafon](https://github.com/alex-kalinichenko/gb/tree/master/megafon)** - Data Science course from Megafon company with dataset from mobile operator. Geodata, shapely, GeoPandas, pipelines, Luigi - October 2021 - [certificate](https://gb.ru/certificates/1451922.en)
+- **[megafon](https://github.com/alex-kalinichenko/gb/tree/master/megafon)** - Data Science course from [Megafon](https://megafon.ru/) mobile company. Geodata, shapely, GeoPandas, pipelines, Luigi - October 2021 - [certificate](https://gb.ru/certificates/1451922.en)
+- **[megafon course project](https://github.com/alex-kalinichenko/gb/tree/master/megafon/final_project)** - offer personal recommendations for mobile operator customers. Predict the likelihood of service activation and offer personal offers for clients. Dataset was provided by [Megafon](https://megafon.ru/)  mobile operator - November 2021
 
  
 
