@@ -36,7 +36,7 @@ The repository contains lessons, homework and course projects that were done dur
 - **[nlp course project](https://github.com/alex-kalinichenko/gb/tree/master/nlp/course_project)** - In the course project, a **Telegram chat bot** was created to classify messages as spam / not spam - August 2021
 - **[deep_learning_cv](https://github.com/alex-kalinichenko/gb/tree/master/deep_learning_cv)** - Deep Learning in **Computer Vision** - September 2021 - [certificate](https://gb.ru/certificates/1408031.en)
 - **[megafon](https://github.com/alex-kalinichenko/gb/tree/master/megafon)** - Data Science course from [Megafon](https://megafon.ru/) mobile company. Geodata, shapely, GeoPandas, pipelines, Luigi - October 2021 - [certificate](https://gb.ru/certificates/1451922.en)
-- **[megafon course project](https://github.com/alex-kalinichenko/gb/tree/master/megafon/final_project)** - offer personal recommendations for mobile operator customers. Predict the likelihood of service activation and offer personal offers for clients. Dataset was provided by [Megafon](https://megafon.ru/)  mobile operator - November 2021
+- **[megafon course project](https://github.com/alex-kalinichenko/gb/tree/master/megafon/final_project)** - offer personal recommendations for mobile operator customers. Predict the likelihood of service activation and personal offers for clients. Dataset was provided by [Megafon](https://megafon.ru/)  mobile operator - November 2021
 
  
 
