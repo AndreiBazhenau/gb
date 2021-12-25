@@ -1,0 +1,11 @@
+{
+    "orders": [
+        {
+            "buyer": "Microsoft",
+            "date": "2021.12.25",
+            "item": "Laptop",
+            "price": 100,
+            "quantity": 1
+        }
+    ]
+}

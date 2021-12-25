@@ -24,28 +24,45 @@ CSV-файл. В этой функции реализовать получени
 функции get_data(), а также сохранение подготовленных данных в 
 соответствующий CSV-файл;
 - Проверить работу программы через вызов функции write_to_csv(). 
-
-2. Задание на закрепление знаний по модулю json. Есть файл orders 
-в формате JSON с информацией о заказах. Написать скрипт, 
-автоматизирующий его заполнение данными. Для этого:
-- Создать функцию write_order_to_json(), в которую передается 
-5 параметров — товар (item), количество (quantity), цена (price), 
-покупатель (buyer), дата (date). Функция должна предусматривать запись 
-данных в виде словаря в файл orders.json. При записи данных указать 
-величину отступа в 4 пробельных символа;
-- Проверить работу программы через вызов функции write_order_to_json() 
-с передачей в нее значений каждого параметра. 
-
-3. Задание на закрепление знаний по модулю yaml. Написать скрипт, 
-автоматизирующий сохранение данных в файле YAML-формата. Для этого:
-- Подготовить данные для записи в виде словаря, в котором первому ключу 
-соответствует список, второму — целое число, третьему — вложенный словарь, 
-где значение каждого ключа — это целое число с юникод-символом, 
-отсутствующим в кодировке ASCII (например, €);
-- Реализовать сохранение данных в файл формата YAML — например, в файл 
-file.yaml. При этом обеспечить стилизацию файла с помощью параметра 
-default_flow_style, а также установить возможность работы с юникодом: 
-allow_unicode = True;
-- Реализовать считывание данных из созданного файла и проверить, 
-совпадают ли они с исходными.
 """
+
+import csv
+
+
+def get_data(files):
+
+    os_prod_list, os_name_list, os_code_list, os_type_list = [], [], [], []
+
+    for file in files:
+        with open(file) as f:
+            for row in f:
+                row_list = row.split(':')
+                if row_list[0] == 'Изготовитель системы':
+                    os_prod_list.append(row_list[1].lstrip().rstrip())
+                elif row_list[0] == 'Название ОС':
+                    os_name_list.append(row_list[1].lstrip().rstrip())
+                elif row_list[0] == 'Код продукта':
+                    os_code_list.append(row_list[1].lstrip().rstrip())
+                elif row_list[0] == 'Тип системы':
+                    os_type_list.append(row_list[1].lstrip().rstrip())
+
+    main_data = [
+        ['Изготовитель системы', 'Название ОС', 'Код продукта', 'Тип системы'],
+    ]
+
+    for i in range(len(os_prod_list)):
+        main_data.append([os_prod_list[i], os_name_list[i], os_code_list[i], os_type_list[i]])
+
+    with open('data/main_data.csv', 'w') as f_n:
+        f_n_writer = csv.writer(f_n, quoting=csv.QUOTE_NONNUMERIC)
+        f_n_writer.writerows(main_data)
+
+    with open('data/main_data.csv') as f_n:
+        print(f_n.read())
+
+
+def write_to_csv(files):
+    get_data(files)
+
+
+write_to_csv(['data/info_1.txt', 'data/info_2.txt', 'data/info_3.txt'])
