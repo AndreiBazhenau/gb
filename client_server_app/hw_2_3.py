@@ -21,9 +21,9 @@ data_to_yaml = {
                 1: [1, 2, 3],
                 2: 2,
                 3: {
-                    4: '€',
-                    5: '©',
-                    6: 'µ'
+                    '4€': '€',
+                    '©': '©',
+                    '6': 'µ'
                     }
                 }
 
@@ -32,5 +32,13 @@ with open('data/file.yaml', 'w') as f_n:
     yaml.dump(data_to_yaml, f_n, default_flow_style=False, allow_unicode=True)
 
 with open('data/file.yaml') as f_n:
-    print(f_n.read())
+    yaml_data = yaml.load(f_n, Loader=yaml.FullLoader)
+    print(yaml_data)
+
+print(data_to_yaml)
+
+if data_to_yaml == f_n:
+    print('Данные совпадают')
+else:
+    print('Данные не совпадают')
 

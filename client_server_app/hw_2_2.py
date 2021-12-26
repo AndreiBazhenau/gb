@@ -16,19 +16,24 @@ import json
 
 def write_order_to_json(item, quantity, price, buyer, date):
 
-    dict_to_json = {
-                    "orders": [{
-                                "item": item,
-                                "quantity": quantity,
-                                "price": price,
-                                "buyer": buyer,
-                                "date": date
-                              }]
-                    }
+    with open('data/orders.json', encoding='utf-8') as file:
+        orders = json.load(file)
 
-    # дописываем к файлу, а не перезатираем
-    with open('data/orders.json', 'a') as f_n:
-        json.dump(dict_to_json, f_n, sort_keys=True, indent=4)
+    print(orders)
+
+    if not 'orders' in orders:
+        orders['orders'] = []
+
+    orders["orders"].append({
+                                    "item": item,
+                                    "quantity": quantity,
+                                    "price": price,
+                                    "buyer": buyer,
+                                    "date": date
+                                  })
+
+    with open('data/orders.json', 'w') as f_n:
+        json.dump(orders, f_n, sort_keys=True, indent=4)
 
     with open('data/orders.json', encoding='utf-8') as f_n:
         print(f_n.read())
