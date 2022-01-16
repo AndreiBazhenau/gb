@@ -38,8 +38,8 @@ def main():
     # парсим параметры запуска
     try:
         parser = argparse.ArgumentParser(description='address & port')
-        parser.add_argument('addr', type=str, help='input server ip address')
-        parser.add_argument('port', type=int, help='input server port')
+        parser.add_argument('addr', type=str, help='input server ip address', default=CONFIG.get('DEFAULT_IP_ADDRESS'))
+        parser.add_argument('port', type=int, help='input server port', default=CONFIG.get('DEFAULT_PORT'))
         args = parser.parse_args()
         ip_address = args.addr
         port = args.port
