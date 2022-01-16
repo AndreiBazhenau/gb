@@ -27,7 +27,10 @@ def handle_response(message):
     if message['response'] == 200:
         print('Connection successful')
         return '200: OK'
-    return '400 : ERROR'
+    if message['response'] == 400:
+        print('Connection not successful')
+        return '400: Error'
+    raise ValueError
 
 
 def main():
