@@ -26,8 +26,14 @@ def main():
     # парсим параметры запуска
     try:
         parser = argparse.ArgumentParser(description='address & port')
-        parser.add_argument('server_ip_address', type=str, help='input server ip address')
-        parser.add_argument('server_port', type=int, help='input server port')
+        parser.add_argument('server_ip_address',
+                            type=str,
+                            help='input server ip address'
+                            )
+        parser.add_argument('server_port',
+                            type=int,
+                            help='input server port'
+                            )
         args = parser.parse_args()
         ip_address = args.server_ip_address
         port = args.server_port
@@ -72,7 +78,7 @@ def main():
             # close — закрываем соединение
             client.close()
         except (ValueError, json.JSONDecodeError):
-            print('Принято некорретное сообщение от клиента')
+            print('Received incorrect message from the client')
             client.close()
 
 

@@ -40,8 +40,16 @@ def main():
     # парсим параметры запуска
     try:
         parser = argparse.ArgumentParser(description='address & port')
-        parser.add_argument('addr', type=str, help='input server ip address', default=CONFIG.get('DEFAULT_IP_ADDRESS'))
-        parser.add_argument('port', type=int, help='input server port', default=CONFIG.get('DEFAULT_PORT'))
+        parser.add_argument('addr',
+                            type=str,
+                            help='input server ip address',
+                            default=CONFIG.get('DEFAULT_IP_ADDRESS')
+                            )
+        parser.add_argument('port',
+                            type=int,
+                            help='input server port',
+                            default=CONFIG.get('DEFAULT_PORT')
+                            )
         args = parser.parse_args()
         ip_address = args.addr
         port = args.port
@@ -66,11 +74,11 @@ def main():
     try:
         response = get_message(s, CONFIG)
         handled_response = handle_response(response)
-        print(f'Ответ от сервера: {response}')
+        print(f'Server response: {response}')
         print(handled_response)
 
     except Exception:
-        print('Ошибка обработки ответа сервера')
+        print('Error: server response processing')
 
     # close — закрываем соединение
     s.close()
