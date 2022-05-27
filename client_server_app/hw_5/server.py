@@ -3,12 +3,16 @@ import argparse
 import time
 import json
 from utils import read_config, get_message, send_message
+import logging
+
+server_log = logging.getLogger('server')
 
 
 def handle_message(message):
     current_time = time.time()
     if message['action'] == 'presence':
         print(f'Received presence at {current_time}')
+        server_log.info('Received presence at %s', current_time)
 
         # формируем ответное сообщение
         presence_msg = {
@@ -43,6 +47,7 @@ def main():
         port = CONFIG.get('DEFAULT_PORT')
 
     print(f'Starting server {ip_address}:{port}')
+    server_log.info(f'Starting server {ip_address}:{port}')
 
     # Создаем сокет TCP для приёма соединений по сети
     # коммуникационный домен = AF_INET - создаваемый сокет будет сетевым.
@@ -79,6 +84,7 @@ def main():
             client.close()
         except (ValueError, json.JSONDecodeError):
             print('Received incorrect message from the client')
+            server_log.critical('Received incorrect message from the client')
             client.close()
 
 

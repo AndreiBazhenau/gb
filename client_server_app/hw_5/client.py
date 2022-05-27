@@ -2,7 +2,9 @@ from socket import socket, AF_INET, SOCK_STREAM
 import argparse
 import time
 from utils import read_config, send_message, get_message
+import logging
 
+client_log = logging.getLogger('client')
 
 def create_presence_msg():
 
@@ -26,9 +28,11 @@ def handle_response(message):
     """
     if message['response'] == 200:
         print('Connection successful')
+        client_log.info('Connection successful')
         return '200: OK'
     if message['response'] == 400:
         print('Connection not successful')
+        client_log.warning('Connection not successful')
         return '400: Error'
     raise ValueError
 
@@ -54,6 +58,7 @@ def main():
         ip_address = args.addr
         port = args.port
         print(f'Try to connect to {ip_address}:{port} server')
+        client_log.info('Try to connect to %s: %s', ip_address, port)
 
     except Exception:
         ip_address = CONFIG.get('DEFAULT_IP_ADDRESS')
@@ -65,20 +70,23 @@ def main():
     # Соединиться с сервером
     s.connect((ip_address, port))
 
-    # формируем запрос к серверу
-    presence_msg = create_presence_msg()
+    while True:
+        # формируем запрос к серверу
+        presence_msg = create_presence_msg()
 
-    # отправляем на сокет сообщение
-    send_message(s, presence_msg, CONFIG)
+        # отправляем на сокет сообщение
+        send_message(s, presence_msg, CONFIG)
 
-    try:
-        response = get_message(s, CONFIG)
-        handled_response = handle_response(response)
-        print(f'Server response: {response}')
-        print(handled_response)
+        try:
+            response = get_message(s, CONFIG)
+            handled_response = handle_response(response)
+            print(f'Server response: {response}')
+            print(handled_response)
 
-    except Exception:
-        print('Error: server response processing')
+        except Exception:
+            print('Error: server response processing')
+
+        time.sleep(1)
 
     # close — закрываем соединение
     s.close()
