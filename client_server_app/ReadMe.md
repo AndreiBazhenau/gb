@@ -12,6 +12,13 @@ https://gb.ru/courses/216
 python server.py 127.0.0.1 7777 & python client.py 127.0.0.1 7777 &
 ```
 
+**Или (самые удобные способы) для одновременного запуска:**
+
+- создать `compaund run configuration` в PyCharm
+- создать multi run через плагин Multirun
+
+
+
 ## Урок 1. Концепции хранения информации
 
 **Практическое задание**
