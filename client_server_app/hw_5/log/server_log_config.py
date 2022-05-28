@@ -1,39 +1,34 @@
 import logging
+from logging import handlers
 import sys
 
-# # определяем формат логов
-# server_format = logging.Formatter('%(asctime)s - %(levelname)s - %(module)s - %(message)s')
-#
-# # создаём обработчик (handler), определяющий куда пишем логи
-# servel_file_handler = logging.FileHandler('log/server.log')
-#
-# # устанавливаем низший уровень событий, которые будут писаться
-# servel_file_handler.setLevel(logging.INFO)
-#
-# # устанавливаем формат хэндлеру
-# servel_file_handler.setFormatter(server_format)
-#
-# # создаём именованный логгер
-# server_logger = logging.getLogger('server')
-# server_logger.setLevel(logging.CRITICAL)
+# Определить формат логов
+format_crit = logging.Formatter('%(asctime)s - %(levelname)-10s - %(module)-6s -  %(message)s')
+format_file = \
+    logging.Formatter('%(asctime)s - %(levelname)-10s - %(name)s - %(funcName)-16s - %(message)s')
 
-# ==============================================================================================
-# Определить формат сообщений
-format = logging.Formatter('%(asctime)s - %(levelname)s - %(module)s - %(message)s')
-
-# Создать обработчик, который выводит сообщения с уровнем CRITICAL в поток stderr
+# Создаём обработчик, выводящий сообщения с уровнем CRITICAL в поток stderr
 crit_hand = logging.StreamHandler(sys.stderr)
-crit_hand.setLevel(logging.CRITICAL)
-crit_hand.setFormatter(format)
+crit_hand.setLevel(logging.INFO)
+crit_hand.setFormatter(format_crit)
 
-# Создать обработчик, который выводит сообщения в файл
-file_hand = logging.FileHandler('server.log')
+# Создать обработчик, выводящий сообщения в файл
+# file_hand = logging.FileHandler('server.log')
+file_hand = logging.handlers.TimedRotatingFileHandler('log/server.log',
+                                                      when='D',
+                                                      interval=1,
+                                                      backupCount=7,
+                                                      encoding='utf-8',
+                                                      )
 file_hand.setLevel(logging.INFO)
-file_hand.setFormatter(format)
+file_hand.setFormatter(format_file)
 
-# Создать регистратор верхнего уровня с именем 'app'
-server_log = logging.getLogger('server')
-server_log.addHandler(file_hand)
+# Создаём регистратор верхнего уровня
+server_log = logging.getLogger()
+server_log.setLevel(logging.INFO)
+
 server_log.addHandler(crit_hand)
+server_log.addHandler(file_hand)
+
 
 
