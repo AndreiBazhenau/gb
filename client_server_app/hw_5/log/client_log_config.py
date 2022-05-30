@@ -12,7 +12,7 @@ crit_hand.setLevel(logging.INFO)
 crit_hand.setFormatter(format_crit)
 
 # Создать обработчик, выводящий сообщения в файл
-file_hand = logging.FileHandler('log/client.log')
+file_hand = logging.FileHandler('log/client.log', encoding='utf-8')
 file_hand.setLevel(logging.INFO)
 file_hand.setFormatter(format_file)
 
