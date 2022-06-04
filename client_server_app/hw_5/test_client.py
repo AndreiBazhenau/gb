@@ -3,7 +3,7 @@
 
 import unittest
 import time
-from client import create_presence_msg, handle_response
+from client import create_msg, handle_response
 from utils import read_config
 
 
@@ -11,30 +11,27 @@ class TestCreatePresenceMsg(unittest.TestCase):
     CONFIG = read_config()
 
     def test_create_presence_msg_type_dict(self):
-        self.assertIsInstance(create_presence_msg(), dict)
+        self.assertIsInstance(create_msg(), dict)
 
     def test_create_presence_msg(self):
-        test_presence_msg = create_presence_msg()
+        test_presence_msg = create_msg()
         # меняем время на постоянное для теста
         test_presence_msg['time'] = 999
         self.assertEqual(test_presence_msg,
                          {
                              'action': 'presence',
                              'time': 999,
-                             'type': 'status',
-                             'user': {
-                                 "account_name": "C0deMaver1ck",
-                                 "status": "Yep, I am here!"
-                             }
+                             'account_name': 'C0deMaver1ck',
+                             'status': 'online'
                          }
                          )
 
     def test_create_presence_msg_user_type_dict(self):
-        test_presence_msg = create_presence_msg()
-        self.assertIsInstance(test_presence_msg['user'], dict)
+        test_presence_msg = create_msg()
+        self.assertIsInstance(test_presence_msg, dict)
 
     def test_create_presence_msg_num_keys(self):
-        test_presence_msg = create_presence_msg()
+        test_presence_msg = create_msg()
         self.assertEqual(len(test_presence_msg.keys()), 4)
 
 
