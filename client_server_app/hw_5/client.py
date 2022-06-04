@@ -102,12 +102,12 @@ def main():
 
         try:
             response = get_message(s, CONFIG)
-            handled_response = handle_response(response)
             client_log.info(f'Server response: {response}')
+            handled_response = handle_response(response)
             client_log.info(f'Server handled response: {handled_response}')
 
         except Exception as e:
-            client_log.warning(f'{e}: error of server response processing. Response was: {response}')
+            client_log.warning(f'{e}: error of server response processing')
 
         time.sleep(2)
 
