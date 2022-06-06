@@ -6,10 +6,13 @@ from random import randrange
 from utils import read_config, send_message, get_message
 import logging
 import log.client_log_config
+from log.client_log_config import log_client
 
-client_log = logging.getLogger('client.' + __name__)
+
+CLIENT_LOGGER = logging.getLogger('client')
 
 
+@log_client
 def create_msg():
 
     presence = {
@@ -39,6 +42,7 @@ def create_msg():
     return random.choice(msg_lst)
 
 
+@log_client
 def handle_response(message):
     """
     Обработка сообщения
@@ -46,14 +50,14 @@ def handle_response(message):
     """
     if message['response'] == 200:
         print('Connection successful')
-        client_log.info('Response 200. Connection successful')
+        CLIENT_LOGGER.info('Response 200. Connection successful')
         return '200: OK'
     if message['response'] == 400:
         print('Connection not successful')
-        client_log.warning('Response 400. Connection not successful')
+        CLIENT_LOGGER.warning('Response 400. Connection not successful')
         return '400: Error'
 
-    client_log.error('Wrong "response" parameter in the server response')
+    CLIENT_LOGGER.error('Wrong "response" parameter in the server response')
     raise ValueError
 
 
@@ -81,9 +85,9 @@ def main():
     except SystemExit as e:
         ip_address = CONFIG.get('DEFAULT_IP_ADDRESS')
         port = CONFIG.get('DEFAULT_PORT')
-        client_log.info(f'{e}: IP & port are not specified. Used default')
+        CLIENT_LOGGER.info(f'{e}: IP & port are not specified. Used default')
 
-    client_log.warning(f'Starting client {ip_address}:{port}')
+    CLIENT_LOGGER.warning(f'Starting client {ip_address}:{port}')
 
     while True:
         # Создаем сокет TCP для приёма соединений по сети
@@ -94,26 +98,26 @@ def main():
 
         # формируем запрос к серверу
         presence_msg = create_msg()
-        client_log.info(f'Message {presence_msg} was created')
+        CLIENT_LOGGER.info(f'Message {presence_msg} was created')
 
         # отправляем на сокет сообщение
         send_message(s, presence_msg, CONFIG)
-        client_log.info(f'Message {presence_msg} was sent to the server')
+        CLIENT_LOGGER.info(f'Message {presence_msg} was sent to the server')
 
         try:
             response = get_message(s, CONFIG)
-            client_log.info(f'Server response: {response}')
+            CLIENT_LOGGER.info(f'Server response: {response}')
             handled_response = handle_response(response)
-            client_log.info(f'Server handled response: {handled_response}')
+            CLIENT_LOGGER.info(f'Server handled response: {handled_response}')
 
         except Exception as e:
-            client_log.warning(f'{e}: error of server response processing')
+            CLIENT_LOGGER.warning(f'{e}: error of server response processing')
 
         time.sleep(2)
 
         # close — закрываем соединение
         s.close()
-        client_log.info(f'Connection was closed')
+        CLIENT_LOGGER.info(f'Connection was closed')
 
 
 if __name__ == '__main__':

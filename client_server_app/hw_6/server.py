@@ -4,7 +4,7 @@ import time
 import json
 from utils import read_config, get_message, send_message
 import logging
-import log.server_log_config
+from log.server_log_config import server_log
 
 server_log = logging.getLogger('server.' + __name__)
 
