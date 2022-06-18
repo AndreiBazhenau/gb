@@ -1,4 +1,5 @@
 # python3
+import math
 
 
 def gcd_naive(a, b):
@@ -14,7 +15,17 @@ def gcd_naive(a, b):
 def gcd(a, b):
     assert 0 <= a <= 2 * 10 ** 9 and 0 <= b <= 2 * 10 ** 9
 
-    type here
+    devide = max(a, b)
+    devider = min(a, b)
+
+    def gcd_recu(devide, devider):
+        remainder = devide % devider
+        return devider, remainder
+
+    while devider > 0:
+        devide, devider = gcd_recu(devide, devider)
+        if devider == 0:
+            return devide
 
 
 if __name__ == '__main__':
