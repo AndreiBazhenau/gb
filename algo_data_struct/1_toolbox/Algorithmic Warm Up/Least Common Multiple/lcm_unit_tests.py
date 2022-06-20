@@ -6,10 +6,10 @@ from lcm import lcm, lcm_naive
 class TestLCM(unittest.TestCase):
     def test_small(self):
         for (a, b) in product(range(1, 15), repeat=2):
-            self.assertEqual(lcm(a, b), lcm_naive(a, b))
+            self.assertEqual(lcm(a, b), lcm_naive(a, b), f'Test error with values {a} and {b}')
 
     def test_large(self):
-        for (a, b, m) in [(28851538, 1183019, 1933053046), type here]:
+        for (a, b, m) in [(28_851_538, 1_183_019, 1_933_053_046), (12345, 54321, 223_530_915)]:
             self.assertEqual(lcm(a, b), m)
 
 
