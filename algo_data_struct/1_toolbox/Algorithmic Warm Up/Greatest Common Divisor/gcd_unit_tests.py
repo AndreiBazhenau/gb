@@ -8,7 +8,7 @@ class TestGCD(unittest.TestCase):
             self.assertEqual(gcd(a, b), gcd_naive(a, b))
 
     def test_large(self):
-        for (a, b, d) in [(28851538, 1183019, 17657), (28851538, 1183019, 17657)]:
+        for (a, b, d) in [(28851538, 1183019, 17657), (3602599, 54747, 77)]:
             self.assertEqual(gcd(a, b), d)
 
 
