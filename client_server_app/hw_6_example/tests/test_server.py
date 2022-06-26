@@ -1,7 +1,7 @@
 import unittest
 
 from server import handle_message
-from utils import load_configs
+from utils.utils import load_configs
 
 
 class TestServer(unittest.TestCase):

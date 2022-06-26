@@ -2,7 +2,7 @@ import sys
 import os
 import unittest
 from client import create_presence_message, handle_response
-from utils import load_configs
+from utils.utils import load_configs
 
 sys.path.append(os.path.join(os.getcwd(), '..'))
 

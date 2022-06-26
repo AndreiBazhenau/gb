@@ -2,7 +2,7 @@ import sys
 import os
 import unittest
 import json
-from utils import load_configs, get_message, send_message
+from utils.utils import load_configs, get_message, send_message
 
 sys.path.append(os.path.join(os.getcwd(), '..'))
 
