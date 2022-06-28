@@ -1,6 +1,3 @@
-# 1. Для всех функций из урока 3 написать тесты с использованием unittest. Они должны быть
-# оформлены в отдельных скриптах с префиксом test_ в имени файла (например, test_client.py)
-
 import unittest
 import time
 from client import create_msg, handle_response
@@ -17,13 +14,30 @@ class TestCreatePresenceMsg(unittest.TestCase):
         test_presence_msg = create_msg()
         # меняем время на постоянное для теста
         test_presence_msg['time'] = 999
-        self.assertEqual(test_presence_msg,
-                         {
+        if 'message' in test_presence_msg:
+            test_presence_msg['message'] = 999
+        self.assertIn(test_presence_msg,
+                         [{
                              'action': 'presence',
                              'time': 999,
                              'account_name': 'C0deMaver1ck',
                              'status': 'online'
                          }
+                         ,
+                         {
+                             "action": "authenticate",
+                             "time": 999,
+                             "account_name": "C0deMaver1ck",
+                             "password": '0123456789',
+                             "status": "Yep, I am here!",
+                         }
+                         ,
+                         {
+                             "action": "message",
+                             "time": 999,
+                             "account_name": "C0deMaver1ck",
+                             "message": 999,
+                         }]
                          )
 
     def test_create_presence_msg_user_type_dict(self):
@@ -32,7 +46,7 @@ class TestCreatePresenceMsg(unittest.TestCase):
 
     def test_create_presence_msg_num_keys(self):
         test_presence_msg = create_msg()
-        self.assertEqual(len(test_presence_msg.keys()), 4)
+        self.assertIn(len(test_presence_msg.keys()), [4, 5])
 
 
 class TestHandleResponse(unittest.TestCase):
