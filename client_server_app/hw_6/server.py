@@ -4,13 +4,13 @@ import time
 import json
 from utils import read_config, get_message, send_message
 import logging
-from log.server_log_config import server_log
-from log.log_decorator import log
+import log.server_log_config
+from log.log_decorator import Log
 
-server_log = logging.getLogger('server.' + __name__)
+server_log = logging.getLogger('log_server')
 
 
-@log
+@Log()
 def handle_message(message):
     # current_time = time.time()
     current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())

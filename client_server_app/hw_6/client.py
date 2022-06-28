@@ -6,7 +6,6 @@ from random import randrange
 from utils import read_config, send_message, get_message
 import logging
 import log.client_log_config
-#from log.client_log_config import log_client
 from log.log_decorator import log
 
 
