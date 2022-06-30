@@ -21,8 +21,9 @@
 # Это и будет ответом.
 # https://www.geeksforgeeks.org/fibonacci-number-modulo-m-and-pisano-period/
 
+
 def fibonacci_number_again_naive(n, m):
-    assert 0 <= n <= 10 ** 18 and 2 <= m <= 10 ** 3
+    assert 0 <= n <= 10**18 and 2 <= m <= 10**3
 
     if n <= 1:
         return n
@@ -35,7 +36,7 @@ def fibonacci_number_again_naive(n, m):
 
 
 def fibonacci_number_again(n, m):
-    assert 0 <= n <= 10 ** 18 and 2 <= m <= 10 ** 3
+    assert 0 <= n <= 10**18 and 2 <= m <= 10**3
 
     def pizano_period(m):
         previous, current = 0, 1
@@ -58,7 +59,7 @@ def fibonacci_number_again(n, m):
     return fibo(reminder) % m
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     input_n, input_m = map(int, input().split())
     print(fibonacci_number_again_naive(input_n, input_m))
     print(fibonacci_number_again(input_n, input_m))
