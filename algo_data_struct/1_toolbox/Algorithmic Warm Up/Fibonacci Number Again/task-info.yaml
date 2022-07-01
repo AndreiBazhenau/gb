@@ -52,7 +52,7 @@ files:
 - name: fibonacci_number_again.py
   visible: true
   placeholders:
-  - offset: 1882
+  - offset: 1875
     length: 562
     placeholder_text: type here
     initial_state:
@@ -91,7 +91,7 @@ files:
 - name: fibonacci_number_again_unit_tests.py
   visible: true
   placeholders:
-  - offset: 456
+  - offset: 555
     length: 90
     placeholder_text: type here
     initial_state:

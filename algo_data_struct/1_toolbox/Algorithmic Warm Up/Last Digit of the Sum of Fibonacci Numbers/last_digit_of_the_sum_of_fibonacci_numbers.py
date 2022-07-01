@@ -2,7 +2,7 @@
 
 
 def last_digit_of_the_sum_of_fibonacci_numbers_naive(n):
-    assert 0 <= n <= 10 ** 18
+    assert 0 <= n <= 10**18
 
     if n <= 1:
         return n
@@ -17,11 +17,22 @@ def last_digit_of_the_sum_of_fibonacci_numbers_naive(n):
 
 
 def last_digit_of_the_sum_of_fibonacci_numbers(n):
-    assert 0 <= n <= 10 ** 18
+    assert 0 <= n <= 10**18
 
-    type here
+    if n <= 1:
+        return n
+    else:
+        previous, current = 0, 1
+        summ = 1
+        summ_global = 1
+        for i in range(2, n + 1):
+            previous, current = current, previous + current
+            summ += current
+            summ_global += summ
+            # print(f'i={i} current={current}, summ={summ}, summ_global={summ_global}')
+        return summ % 10
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     input_n = int(input())
     print(last_digit_of_the_sum_of_fibonacci_numbers(input_n))
