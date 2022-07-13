@@ -24,12 +24,10 @@ def last_digit_of_the_sum_of_fibonacci_numbers(n):
     else:
         previous, current = 0, 1
         summ = 1
-        summ_global = 1
         for i in range(2, n + 1):
             previous, current = current, previous + current
             summ += current
-            summ_global += summ
-            # print(f'i={i} current={current}, summ={summ}, summ_global={summ_global}')
+            # print(f'i={i} current={current}, summ={summ}')
         return summ % 10
 
 

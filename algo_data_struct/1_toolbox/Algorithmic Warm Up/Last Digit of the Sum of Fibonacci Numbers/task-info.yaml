@@ -4,7 +4,7 @@ files:
   visible: true
   placeholders:
   - offset: 466
-    length: 378
+    length: 295
     placeholder_text: type here
     initial_state:
       length: 9
@@ -44,7 +44,7 @@ files:
 - name: last_digit_of_the_sum_of_fibonacci_numbers_unit_tests.py
   visible: true
   placeholders:
-  - offset: 513
+  - offset: 544
     length: 22
     placeholder_text: type here
     initial_state:
